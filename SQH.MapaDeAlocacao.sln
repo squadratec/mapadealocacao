@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQH.DataAccess", "SQH.DataA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQH.Business", "SQH.Business\SQH.Business.csproj", "{C8B5C34B-6151-4D18-BF9F-E0EC43C48C72}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQH.Entities", "SQH.Entities]\SQH.Entities.csproj", "{4EF836DC-BD52-4A7B-9390-1420FEB4CCD0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQH.Entities", "SQH.Entities\SQH.Entities.csproj", "{4EF836DC-BD52-4A7B-9390-1420FEB4CCD0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
