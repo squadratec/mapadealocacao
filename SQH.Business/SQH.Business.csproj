@@ -10,4 +10,9 @@
     <ProjectReference Include="..\SQH.Shared\SQH.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Contract\" />
+    <Folder Include="Service\" />
+  </ItemGroup>
+
 </Project>
