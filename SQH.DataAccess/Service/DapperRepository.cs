@@ -11,7 +11,7 @@ using System.Linq.Expressions;
 
 namespace SQH.DataAccess.Service
 {
-    public class DapperRepository<T> : IDapperRepository<T> where T : class
+    public abstract class DapperRepository<T> : IDapperRepository<T> where T : class
     {
         private readonly IDatabaseConfig config;
         public DapperRepository(IDatabaseConfig _config)

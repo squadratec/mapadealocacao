@@ -18,7 +18,7 @@ namespace SQH.IoC
                 return new DatabaseConfig(connectionString);
             });
 
-            services.AddSingleton<IDapperRepository<Recurso>, RecursoRepository>();
+            services.AddSingleton<IRecursoRepository, RecursoRepository>();
             services.AddSingleton<IRecursoService, RecursoService>();
         }
 
