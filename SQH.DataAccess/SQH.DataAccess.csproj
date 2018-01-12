@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SQH.Entities]\SQH.Entities.csproj" />
+    <ProjectReference Include="..\SQH.Entities\SQH.Entities.csproj" />
     <ProjectReference Include="..\SQH.Shared\SQH.Shared.csproj" />
   </ItemGroup>
 
