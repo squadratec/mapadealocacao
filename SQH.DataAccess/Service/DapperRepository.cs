@@ -2,6 +2,7 @@
 using SQH.DataAccess.Contract;
 using SQH.DataAccess.Extensions;
 using SQH.DataAccess.Helper;
+using SQH.Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -42,10 +43,12 @@ namespace SQH.DataAccess.Service
 
         public void Remove(T item)
         {
+            var dic = item.GetPrimaryKeyAttribute();
+
             using (IDbConnection cn = Connection)
             {
                 cn.Open();
-                cn.Execute("DELETE FROM " + typeof(T).Name + " WHERE Id=@ID", new { ID = item.ID });
+                cn.Execute($"DELETE FROM {typeof(T).Name} WHERE {dic.Key}=@ID", new { ID = dic.Value });
             }
         }
 
@@ -62,11 +65,12 @@ namespace SQH.DataAccess.Service
         public T FindByID(int id)
         {
             T item = default(T);
+            var dic = item.GetPrimaryKeyAttribute();
 
             using (IDbConnection cn = Connection)
             {
                 cn.Open();
-                item = cn.QueryFirstOrDefault<T>("SELECT * FROM " + typeof(T).Name + " WHERE ID=@ID", new { ID = id });
+                item = cn.QueryFirstOrDefault<T>($"SELECT * FROM {typeof(T).Name}  WHERE {dic.Key}=@ID", new { ID = id });
             }
             return item;
         }
@@ -94,7 +98,7 @@ namespace SQH.DataAccess.Service
             using (IDbConnection cn = Connection)
             {
                 cn.Open();
-                items = cn.Query<T>("SELECT * FROM " + typeof(T).Name);
+                items = cn.Query<T>($"SELECT * FROM {typeof(T).Name}");
             }
             return items;
         }
