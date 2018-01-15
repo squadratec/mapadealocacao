@@ -1,4 +1,47 @@
-﻿
-@{
-    ViewData["Title"] = "Index";
+﻿@{
+    ViewData["Title"] = "Listar Recursos";
 }
+
+@model IEnumerable<SQH.Entities.Models.Recurso.RecursoListaModel>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <a asp-action="Create" class="pull-right">
+                <i class="glyphicon glyphicon-plus"></i>
+                <label>Novo Recurso</label>
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @item.Nome
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.Id" title="Editar">
+                                    <i class="glyphicon glyphicon-pencil"></i>
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" title="Deletar">
+                                    <i class="glyphicon glyphicon-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

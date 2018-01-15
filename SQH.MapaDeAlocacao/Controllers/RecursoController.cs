@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SQH.Entities.Models.Recurso;
 using SQH.Business.Contract;
@@ -19,7 +17,17 @@ namespace SQH.MapaDeAlocacao.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var model = new List<RecursoListaModel>();
+
+            var objs = _recursoService.ObtemTodos();
+
+            objs.ToList().ForEach(x => model.Add(new RecursoListaModel()
+            {
+                Id = x.IdRecurso,
+                Nome = x.Nome
+            }));
+
+            return View(model);
         }
 
         public IActionResult Create()

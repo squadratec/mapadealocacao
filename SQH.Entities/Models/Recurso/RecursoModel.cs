@@ -2,7 +2,7 @@
 
 namespace SQH.Entities.Models.Recurso
 {
-    public class RecursoModel
+    public class RecursoModel 
     {
         public int? Id { get; set; }
 

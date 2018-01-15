@@ -33,6 +33,30 @@ namespace SQH.Shared.Extensions
             }
             return retorno;
         }
+
+        public static Dictionary<string, object> GetAttributeByType<T>(this T objeto, Type typeAttribute)
+        {
+            Dictionary<string, object> retorno = new Dictionary<string, object>();
+            var props = objeto.GetType().GetProperties();
+
+            foreach (var prop in props)
+            {
+                var propattr = prop.GetCustomAttributes(true);
+                object attr = (from row in propattr
+                               where row.GetType() == typeAttribute
+                               select row)
+                              .FirstOrDefault();
+
+                if (attr == null)
+                    continue;
+                else
+                {
+                    retorno[prop.Name] = prop.GetValue(objeto, null);
+                }
+            }
+            return retorno;
+        }
+
         public static string ToSerialize<T>(this T requisitor)
         {
             var dados = HttpUtility.ParseQueryString(string.Empty);

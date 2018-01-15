@@ -2,6 +2,7 @@
 using SQH.DataAccess.Contract;
 using SQH.Entities.Database;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SQH.Business.Service
@@ -20,6 +21,13 @@ namespace SQH.Business.Service
             var obj = _recursoRepository.FindByID(id);
 
             return obj;
+        }
+
+        public IEnumerable<Recurso> ObtemTodos()
+        {
+            var objs = _recursoRepository.FindAll();
+
+            return objs;
         }
 
         public bool Incluir(Entities.Models.Recurso.RecursoModel model)
@@ -42,7 +50,7 @@ namespace SQH.Business.Service
         {
             if (ValidaCamposObrigatorios(model) && ValidaSeRegistroJaCadastrado(model))
             {
-                var obj = new Recurso(model.Nome);
+                var obj = new Recurso(model.Nome, model.Id.Value);
 
                 _recursoRepository.Update(obj);
 
@@ -53,7 +61,7 @@ namespace SQH.Business.Service
                 return false;
             }
         }
-
+        
         #region Método Privados
         private bool ValidaCamposObrigatorios(Entities.Models.Recurso.RecursoModel model)
         {
@@ -65,7 +73,7 @@ namespace SQH.Business.Service
 
         private bool ValidaSeRegistroJaCadastrado(Entities.Models.Recurso.RecursoModel model)
         {
-            var registros = _recursoRepository.Find(x => x.Nome.ToLower() == model.Nome.ToLower() && x.IdRecurso != model.Id);
+            var registros = _recursoRepository.Find(x => x.Nome == model.Nome && x.IdRecurso != model.Id);
 
             if (registros.Count() > 1)
                 return false;
