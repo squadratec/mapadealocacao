@@ -1,0 +1,9 @@
+﻿@foreach (string key in Enum.GetNames(typeof(SQH.Shared.Enums.Alerts.Alert)))
+{
+    if (Convert.ToString(TempData["Type"]).Equals(key))
+    {
+        <div class="alert alert-@key" role="alert">
+            <strong>@TempData["msg"]</strong>
+        </div>
+    }
+}

@@ -20,6 +20,9 @@ namespace SQH.IoC
 
             services.AddSingleton<IRecursoRepository, RecursoRepository>();
             services.AddSingleton<IRecursoService, RecursoService>();
+
+            services.AddSingleton<ITipoAlocacaoRepository, TipoAlocacaoRepository>();
+            services.AddSingleton<ITipoAlocacaoService, TipoAlocacaoService>();
         }
 
     }

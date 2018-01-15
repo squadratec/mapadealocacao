@@ -73,7 +73,7 @@ namespace SQH.DataAccess.Helper
         /// </returns>
         public static string GetInsertQuery<T>(string tableName, T item)
         {
-            var dic = typeof(T).GetPrimaryKeyAttribute();
+            var dic = item.GetPrimaryKeyAttribute();
 
             PropertyInfo[] props = item.GetType().GetProperties();
             string[] columns = props.Select(p => p.Name).Where(x => x != dic.Key).ToArray();
