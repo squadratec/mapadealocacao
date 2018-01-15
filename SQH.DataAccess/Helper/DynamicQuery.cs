@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
+using SQH.Shared.Extensions;
 
 namespace SQH.DataAccess.Helper
 {
@@ -70,14 +71,17 @@ namespace SQH.DataAccess.Helper
         /// <returns>
         /// The Sql query based on the item properties.
         /// </returns>
-        public static string GetInsertQuery(string tableName, dynamic item)
+        public static string GetInsertQuery<T>(string tableName, T item)
         {
-            PropertyInfo[] props = item.GetType().GetProperties();
-            string[] columns = props.Select(p => p.Name).Where(s => s != "ID").ToArray();
+            var dic = typeof(T).GetPrimaryKeyAttribute();
 
-            return string.Format("INSERT INTO {0} ({1}) OUTPUT inserted.ID VALUES (@{2})",
+            PropertyInfo[] props = item.GetType().GetProperties();
+            string[] columns = props.Select(p => p.Name).Where(x => x != dic.Key).ToArray();
+
+            return string.Format("INSERT INTO {0} ({1}) OUTPUT inserted.{2} VALUES (@{3})",
                                  tableName,
                                  string.Join(",", columns),
+                                 dic.Key,
                                  string.Join(",@", columns));
         }
 
@@ -89,14 +93,16 @@ namespace SQH.DataAccess.Helper
         /// <returns>
         /// The Sql query based on the item properties.
         /// </returns>
-        public static string GetUpdateQuery(string tableName, dynamic item)
+        public static string GetUpdateQuery<T>(string tableName, T item)
         {
+            var dic = typeof(T).GetPrimaryKeyAttribute();
+
             PropertyInfo[] props = item.GetType().GetProperties();
             string[] columns = props.Select(p => p.Name).ToArray();
 
-            var parameters = columns.Select(name => name + "=@" + name).ToList();
+            var parameters = columns.Select(name => name + "=@" + name).Where(x => x != dic.Key).ToList();
 
-            return string.Format("UPDATE {0} SET {1} WHERE ID=@ID", tableName, string.Join(",", parameters));
+            return string.Format("UPDATE {0} SET {1} WHERE {2}={3}", tableName, string.Join(",", parameters), dic.Key, dic.Value);
         }
 
         /// <summary>
