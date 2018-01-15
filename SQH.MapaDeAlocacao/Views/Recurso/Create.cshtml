@@ -2,11 +2,14 @@
     ViewData["Title"] = "Incluir Recurso";
 }
 
+@model SQH.Entities.Models.Recurso.RecursoModel
+
 <form>
     <div class="container">
         <div class="form-group">
-            <label>Nome</label>
-            <input type="text" class="form-control" maxlength="150" />
+            <label asp-for="Nome"></label>
+            <input asp-for="Nome" type="text" class="form-control" maxlength="150" />
+            <span asp-validation-for="Nome"></span>
         </div>
 
         <div>
