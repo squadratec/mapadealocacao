@@ -1,4 +1,51 @@
-﻿
+﻿@model IEnumerable<SQH.Entities.Models.TipoAlocacao.TipoAlocacaoModel>
+
 @{
     ViewData["Title"] = "Listagem de tipos de alocação";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <a asp-action="Create" class="pull-right">
+                <i class="glyphicon glyphicon-plus"></i>
+                <label>Novo tipo de alocação</label>
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <table  class="table table-striped table-bordered" cellspacing="0" id="tableTipoAlocacao">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th style="text-align:center">Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @item.Nome
+                            </td>
+                            <td style="text-align:center">
+                                <a asp-action="Create" asp-route-id="@item.IdTipoAlocacao" title="Editar">
+                                    <i class="glyphicon glyphicon-pencil"></i>
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.IdTipoAlocacao" title="Deletar">
+                                    <i class="glyphicon glyphicon-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/app/js/TipoAlocacao/IndexTipoAlocacao.js"></script>
 }

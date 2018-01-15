@@ -14,6 +14,7 @@ namespace SQH.Entities.Database
             Nome = TipoAlocacao.Nome;
             Cor = TipoAlocacao.Cor;
             Sigla = TipoAlocacao.Sigla;
+            IdTipoAlocacao = TipoAlocacao.IdTipoAlocacao;
         }
 
         public tipo_alocacao()

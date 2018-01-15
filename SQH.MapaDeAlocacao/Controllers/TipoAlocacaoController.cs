@@ -9,7 +9,7 @@ using static SQH.Shared.Enums.Alerts;
 
 namespace SQH.MapaDeAlocacao.Controllers
 {
-    
+
     public class TipoAlocacaoController : BaseController
     {
         private readonly ITipoAlocacaoService _tipoAlocacaoService;
@@ -23,29 +23,87 @@ namespace SQH.MapaDeAlocacao.Controllers
         [Route("tipoAlocacao")]
         public IActionResult Index()
         {
-            return View();
+            var model = new List<TipoAlocacaoModel>();
+
+            var objs = _tipoAlocacaoService.ObtemTodos();
+
+            objs.ToList().ForEach(x => model.Add(new TipoAlocacaoModel()
+            {
+                IdTipoAlocacao = x.IdTipoAlocacao,
+                Nome = x.Nome
+            }));
+
+            return View(model);
         }
 
-        [Route("tipoalocacao/create", Name = "GetTipoAlocacao")]
-        public IActionResult Create()
+        [Route("tipoalocacao/create/{Id=0}", Name = "GetTipoAlocacao")]
+        public IActionResult Create(Int32 Id)
         {
-            TipoAlocacaoModel tipoAlocacao = new TipoAlocacaoModel();
-            return View(tipoAlocacao);
+            var tipoAlocacao = _tipoAlocacaoService.ObterPorId(Id);
+            TipoAlocacaoModel tipoAlocacaoModel = new TipoAlocacaoModel();
+
+            if (tipoAlocacao != null)
+            {
+
+                tipoAlocacaoModel = new TipoAlocacaoModel()
+                {
+                    Cor = tipoAlocacao.Cor,
+                    DataCadastro = tipoAlocacao.DataCadastro,
+                    IdTipoAlocacao = tipoAlocacao.IdTipoAlocacao,
+                    Nome = tipoAlocacao.Nome,
+                    Sigla = tipoAlocacao.Sigla
+                };
+            }
+
+            return View(tipoAlocacaoModel);
         }
 
-        [HttpPost, Route("tipoalocacao/create", Name = "PostTipoAlocacao")]
+        [HttpPost, Route("tipoalocacao/create/{id=0}", Name = "PostTipoAlocacao")]
         [ValidateAntiForgeryToken]
         public IActionResult Create(TipoAlocacaoModel model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _tipoAlocacaoService.Incluir(model);
+                if (ModelState.IsValid)
+                {
+                    if (model.IdTipoAlocacao == 0)
+                    {
+                        _tipoAlocacaoService.Incluir(model);
 
-                ExibirMensagem("Tipo alocação cadastrada com sucesso!!", Alert.success);
+                        ExibirMensagem("Tipo alocação cadastrada com sucesso!!", Alert.success);
+                    }
+                    else
+                    {
+                        _tipoAlocacaoService.Editar(model);
 
+                        ExibirMensagem("Tipo alocação alterada com sucesso!!", Alert.success);
+                    }
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                ExibirMensagem(ex.Message, Alert.danger);
                 return RedirectToAction("Index");
             }
             return View();
+        }
+
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                _tipoAlocacaoService.Deletar(id);
+
+                ExibirMensagem("Registro excluído com Sucesso.", Alert.success);
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ExibirMensagem(ex.Message, Alert.danger);
+                return RedirectToAction("Index");
+            }
         }
     }
 }

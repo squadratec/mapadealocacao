@@ -2,7 +2,10 @@
 {
     if (Convert.ToString(TempData["Type"]).Equals(key))
     {
-        <div class="alert alert-@key" role="alert">
+        <div class="alert alert-@key alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
             <strong>@TempData["msg"]</strong>
         </div>
     }

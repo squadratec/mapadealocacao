@@ -1,6 +1,7 @@
 ﻿using SQH.Business.Contract;
 using SQH.DataAccess.Contract;
 using SQH.Entities.Database;
+using System.Collections.Generic;
 
 namespace SQH.Business.Service
 {
@@ -16,6 +17,13 @@ namespace SQH.Business.Service
         public tipo_alocacao ObterPorId(int id)
         {
             return _tipoAlocacaoRepository.FindByID(id);
+        }
+
+        public IEnumerable<tipo_alocacao> ObtemTodos()
+        {
+            var objs = _tipoAlocacaoRepository.FindAll();
+
+            return objs;
         }
 
         public bool Incluir(Entities.Models.TipoAlocacao.TipoAlocacaoModel model)
@@ -37,6 +45,21 @@ namespace SQH.Business.Service
             if (IsTipoAlocacao(model.IdTipoAlocacao))
             {
                 _tipoAlocacaoRepository.Update(new tipo_alocacao(model));
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool Deletar(int id)
+        {
+            var obj = _tipoAlocacaoRepository.FindByID(id);
+
+            if (obj != null)
+            {
+                _tipoAlocacaoRepository.Remove(obj);
                 return true;
             }
             else
