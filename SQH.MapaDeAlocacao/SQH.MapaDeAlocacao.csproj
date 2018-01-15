@@ -15,8 +15,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SQH.Business\SQH.Business.csproj" />
-    <ProjectReference Include="..\SQH.DataAccess\SQH.DataAccess.csproj" />
     <ProjectReference Include="..\SQH.Entities\SQH.Entities.csproj" />
+    <ProjectReference Include="..\SQH.IoC\SQH.IoC.csproj" />
     <ProjectReference Include="..\SQH.Shared\SQH.Shared.csproj" />
   </ItemGroup>
 
