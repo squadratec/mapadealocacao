@@ -3,10 +3,12 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using SQH.Entities.Models.Recurso;
 using SQH.Business.Contract;
+using static SQH.Shared.Enums.Alerts;
+using System;
 
 namespace SQH.MapaDeAlocacao.Controllers
 {
-    public class RecursoController : Controller
+    public class RecursoController : BaseController
     {
         private readonly IRecursoService _recursoService;
 
@@ -38,9 +40,23 @@ namespace SQH.MapaDeAlocacao.Controllers
         [HttpPost]
         public IActionResult Create(RecursoModel model)
         {
-            _recursoService.Incluir(model);
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _recursoService.Incluir(model);
 
-            return Json(new { sucesso = true, mensagem = "Registro incluído com Sucesso." });
+                    ExibirMensagem("Registro incluído com Sucesso.", Alert.success);
+
+                    return RedirectToAction("Index");
+                }
+                return View();
+            }
+            catch (Exception ex)
+            {
+                ExibirMensagem(ex.Message, Alert.danger);
+                return View();
+            }
         }
 
         public IActionResult Edit(int id)
@@ -58,9 +74,38 @@ namespace SQH.MapaDeAlocacao.Controllers
         [HttpPost]
         public IActionResult Edit(RecursoModel model)
         {
-            _recursoService.Editar(model);
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _recursoService.Editar(model);
+                    ExibirMensagem("Registro alterado com Sucesso.", Alert.success);
 
-            return Json(new { sucesso = true, mensagem = "Registro alterado com Sucesso." });
+                    return RedirectToAction("Index");
+                }
+                return View();
+            }
+            catch (Exception ex)
+            {
+                ExibirMensagem(ex.Message, Alert.danger);
+                return View();
+            }
+        }
+
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                _recursoService.Deletar(id);
+                ExibirMensagem("Registro excluído com Sucesso.", Alert.success);
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ExibirMensagem(ex.Message, Alert.danger);
+                return RedirectToAction("Index");
+            }
         }
     }
 }

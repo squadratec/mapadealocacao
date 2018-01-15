@@ -161,7 +161,7 @@ namespace SQH.DataAccess.Helper
             if (body.NodeType != ExpressionType.AndAlso && body.NodeType != ExpressionType.OrElse)
             {
                 string propertyName = GetPropertyName(body);
-                dynamic propertyValue = GetValue((MemberExpression)body.Right);
+                dynamic propertyValue = body.Right is MemberExpression ? GetValue((MemberExpression)body.Right) : body.Right;
                 string opr = GetOperator(body.NodeType);
                 string link = GetOperator(linkingType);
 

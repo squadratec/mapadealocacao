@@ -12,5 +12,7 @@ namespace SQH.Business.Contract
         IEnumerable<Recurso> ObtemTodos();
 
         bool Editar(Entities.Models.Recurso.RecursoModel model);
+
+        bool Deletar(int id);
     }
 }

@@ -2,6 +2,7 @@
 using SQH.DataAccess.Contract;
 using SQH.Entities.Database;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -32,7 +33,7 @@ namespace SQH.Business.Service
 
         public bool Incluir(Entities.Models.Recurso.RecursoModel model)
         {
-            if (ValidaCamposObrigatorios(model) && ValidaSeRegistroJaCadastrado(model))
+            if (ValidaCamposObrigatorios(model) && ValidaSeRegistroJaCadastrado(model, false))
             {
                 var obj = new Recurso(model.Nome);
 
@@ -48,7 +49,7 @@ namespace SQH.Business.Service
 
         public bool Editar(Entities.Models.Recurso.RecursoModel model)
         {
-            if (ValidaCamposObrigatorios(model) && ValidaSeRegistroJaCadastrado(model))
+            if (ValidaCamposObrigatorios(model) && ValidaSeRegistroJaCadastrado(model, false))
             {
                 var obj = new Recurso(model.Nome, model.Id.Value);
 
@@ -61,7 +62,22 @@ namespace SQH.Business.Service
                 return false;
             }
         }
-        
+
+        public bool Deletar(int id)
+        {
+            var obj = _recursoRepository.FindByID(id);
+
+            if (ValidaSeRecursoUtilizado(obj))
+            {
+                _recursoRepository.Remove(obj);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         #region Método Privados
         private bool ValidaCamposObrigatorios(Entities.Models.Recurso.RecursoModel model)
         {
@@ -71,14 +87,24 @@ namespace SQH.Business.Service
                 return false;
         }
 
-        private bool ValidaSeRegistroJaCadastrado(Entities.Models.Recurso.RecursoModel model)
+        private bool ValidaSeRegistroJaCadastrado(Entities.Models.Recurso.RecursoModel model, bool isEditar)
         {
-            var registros = _recursoRepository.Find(x => x.Nome == model.Nome && x.IdRecurso != model.Id);
+            IEnumerable<Recurso> registros;
+
+            if (isEditar)
+                registros = _recursoRepository.Find(x => x.Nome == model.Nome && (x.IdRecurso != model.Id));
+            else
+                registros = _recursoRepository.Find(x => x.Nome == model.Nome);
 
             if (registros.Count() > 1)
                 return false;
             else
                 return true;
+        }
+
+        private bool ValidaSeRecursoUtilizado(Recurso obj)
+        {
+            return true;
         }
         #endregion
     }
