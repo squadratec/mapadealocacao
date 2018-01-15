@@ -64,7 +64,7 @@ namespace SQH.DataAccess.Service
 
         public T FindByID(int id)
         {
-            T item = default(T);
+            var item = Activator.CreateInstance(typeof(T));
             var dic = item.GetPrimaryKeyAttribute();
 
             using (IDbConnection cn = Connection)
@@ -72,7 +72,8 @@ namespace SQH.DataAccess.Service
                 cn.Open();
                 item = cn.QueryFirstOrDefault<T>($"SELECT * FROM {typeof(T).Name}  WHERE {dic.Key}=@ID", new { ID = id });
             }
-            return item;
+
+            return (T)item;
         }
 
         public IEnumerable<T> Find(Expression<Func<T, bool>> predicate)
