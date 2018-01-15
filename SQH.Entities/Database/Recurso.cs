@@ -12,6 +12,13 @@ namespace SQH.Entities.Database
             Nome = nome;
         }
 
+        public Recurso(string nome, int idRecurso)
+        {
+            DataCadastro = DateTime.Now;
+            Nome = nome;
+            IdRecurso = idRecurso;
+        }
+
         public Recurso()
         { }
 

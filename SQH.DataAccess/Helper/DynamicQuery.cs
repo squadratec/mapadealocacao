@@ -73,7 +73,7 @@ namespace SQH.DataAccess.Helper
         /// </returns>
         public static string GetInsertQuery<T>(string tableName, T item)
         {
-            var dic = typeof(T).GetPrimaryKeyAttribute();
+            var dic = item.GetPrimaryKeyAttribute();
 
             PropertyInfo[] props = item.GetType().GetProperties();
             string[] columns = props.Select(p => p.Name).Where(x => x != dic.Key).ToArray();
@@ -95,12 +95,12 @@ namespace SQH.DataAccess.Helper
         /// </returns>
         public static string GetUpdateQuery<T>(string tableName, T item)
         {
-            var dic = typeof(T).GetPrimaryKeyAttribute();
+            var dic = item.GetPrimaryKeyAttribute();
 
             PropertyInfo[] props = item.GetType().GetProperties();
-            string[] columns = props.Select(p => p.Name).ToArray();
+            string[] columns = props.Select(p => p.Name).Where(x => x != dic.Key).ToArray();
 
-            var parameters = columns.Select(name => name + "=@" + name).Where(x => x != dic.Key).ToList();
+            var parameters = columns.Select(name => name + "=@" + name).ToList();
 
             return string.Format("UPDATE {0} SET {1} WHERE {2}={3}", tableName, string.Join(",", parameters), dic.Key, dic.Value);
         }
@@ -159,11 +159,11 @@ namespace SQH.DataAccess.Helper
             if (body.NodeType != ExpressionType.AndAlso && body.NodeType != ExpressionType.OrElse)
             {
                 string propertyName = GetPropertyName(body);
-                dynamic propertyValue = body.Right;
+                dynamic propertyValue = GetValue((MemberExpression)body.Right);
                 string opr = GetOperator(body.NodeType);
                 string link = GetOperator(linkingType);
 
-                queryProperties.Add(new QueryParameter(link, propertyName, propertyValue.Value, opr));
+                queryProperties.Add(new QueryParameter(link, propertyName, propertyValue, opr));
             }
             else
             {
@@ -179,7 +179,7 @@ namespace SQH.DataAccess.Helper
         /// <returns>The property name for the property expression.</returns>
         private static string GetPropertyName(BinaryExpression body)
         {
-            string propertyName = body.Left.ToString().Split(new char[] { '.' })[1];
+            string propertyName = body.Left.ToString().Split(new char[] { '.' })[1].Split(',')[0];
 
             if (body.Left.NodeType == ExpressionType.Convert)
             {
@@ -188,6 +188,17 @@ namespace SQH.DataAccess.Helper
             }
 
             return propertyName;
+        }
+
+        private static object GetValue(MemberExpression member)
+        {
+            var objectMember = Expression.Convert(member, typeof(object));
+
+            var getterLambda = Expression.Lambda<Func<object>>(objectMember);
+
+            var getter = getterLambda.Compile();
+
+            return getter();
         }
 
         /// <summary>

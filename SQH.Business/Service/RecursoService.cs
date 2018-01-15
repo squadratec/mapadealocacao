@@ -42,7 +42,7 @@ namespace SQH.Business.Service
         {
             if (ValidaCamposObrigatorios(model) && ValidaSeRegistroJaCadastrado(model))
             {
-                var obj = new Recurso(model.Nome);
+                var obj = new Recurso(model.Nome, model.Id.Value);
 
                 _recursoRepository.Update(obj);
 
@@ -65,7 +65,7 @@ namespace SQH.Business.Service
 
         private bool ValidaSeRegistroJaCadastrado(Entities.Models.Recurso.RecursoModel model)
         {
-            var registros = _recursoRepository.Find(x => x.IdRecurso != model.Id);
+            var registros = _recursoRepository.Find(x => x.Nome == model.Nome && x.IdRecurso != model.Id);
 
             if (registros.Count() > 1)
                 return false;
