@@ -2,6 +2,7 @@
 using SQH.DataAccess.Contract;
 using SQH.Entities.Database;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SQH.Business.Service
@@ -20,6 +21,13 @@ namespace SQH.Business.Service
             var obj = _recursoRepository.FindByID(id);
 
             return obj;
+        }
+
+        public IEnumerable<Recurso> ObtemTodos()
+        {
+            var objs = _recursoRepository.FindAll();
+
+            return objs;
         }
 
         public bool Incluir(Entities.Models.Recurso.RecursoModel model)
@@ -53,7 +61,7 @@ namespace SQH.Business.Service
                 return false;
             }
         }
-
+        
         #region Método Privados
         private bool ValidaCamposObrigatorios(Entities.Models.Recurso.RecursoModel model)
         {

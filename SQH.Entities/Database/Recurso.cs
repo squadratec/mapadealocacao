@@ -1,6 +1,5 @@
 ﻿using SQH.Shared.Attributes;
 using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace SQH.Entities.Database
 {
@@ -24,7 +23,10 @@ namespace SQH.Entities.Database
 
         [PrimaryKey]
         public int IdRecurso { get; set; }
+
+        [Ignore]
         public DateTime DataCadastro { get; set; }
+
         public String Nome { get; set; }
     }
 }

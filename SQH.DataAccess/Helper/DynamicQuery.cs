@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using SQH.Shared.Extensions;
+using SQH.Shared.Attributes;
 
 namespace SQH.DataAccess.Helper
 {
@@ -96,9 +97,10 @@ namespace SQH.DataAccess.Helper
         public static string GetUpdateQuery<T>(string tableName, T item)
         {
             var dic = item.GetPrimaryKeyAttribute();
+            var ignoneValues = item.GetAttributeByType(typeof(IgnoreAttribute)).Select(x => x.Key);
 
             PropertyInfo[] props = item.GetType().GetProperties();
-            string[] columns = props.Select(p => p.Name).Where(x => x != dic.Key).ToArray();
+            string[] columns = props.Select(p => p.Name).Where(x => x != dic.Key && !ignoneValues.Contains(x)).ToArray();
 
             var parameters = columns.Select(name => name + "=@" + name).ToList();
 
