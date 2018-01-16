@@ -1,0 +1,37 @@
+﻿@model SQH.Entities.Models.Projeto.ProjetoModel
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th width="10%">Tipo de Alocação</th>
+            <th width="20%">Período Inicial</th>
+            <th width="20%">Período Final</th>
+            <th width="40%">Recursos</th>
+            <th width="10%" class="text-center">Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Alocacoes)
+        {
+            <tr>
+                <td>
+                    @item.TipoAlocacao
+                    <input type="hidden" asp-for="@item.IdTipoAlocacao" />
+                    <input type="hidden" asp-for="@item.IdAlocacao" />
+                </td>
+                <td>
+                    <input type="text" class="form-control data" asp-for="@item.DataInicio"/>
+                </td>
+                <td>
+                    <input type="text" class="form-control data" asp-for="@item.DataFinal" />
+                </td>
+                <td></td>
+                <td class="text-center">
+                    <a href="#">
+                        <i class="glyphicon glyphicon-edit"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

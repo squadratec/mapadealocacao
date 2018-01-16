@@ -3,7 +3,7 @@
     ViewData["Title"] = "Listagem de Projetos";
 }
 
-@model IEnumerable<SQH.Entities.Models.Projeto.ProjetoModel>
+@model IEnumerable<SQH.Entities.Models.Projeto.ProjetoListaModel>
 
 <div class="container">
     <div class="row">
@@ -13,7 +13,7 @@
                     <tr>
                         <th>Nome</th>
                         <th>Líder</th>
-                        <th style="text-align:center">Ações</th>
+                        <th class="text-center">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -26,8 +26,8 @@
                             <td>
                                 @item.Lider
                             </td>
-                            <td style="text-align:center">
-                                <a href="" title="Definir Mapa de Alocação">
+                            <td class="text-center">
+                                <a asp-action="Edit" asp-route-id="@item.IdProjeto" title="Definir Mapa de Alocação">
                                     <i class="glyphicon glyphicon-edit"></i>
                                 </a>
                             </td>
