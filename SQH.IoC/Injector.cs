@@ -1,6 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SQH.Business.Contract;
+using SQH.Business.Service;
 using SQH.DataAccess.Contract;
+using SQH.DataAccess.Service;
 using System.Linq;
 using System.Reflection;
 
