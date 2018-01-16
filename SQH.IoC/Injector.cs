@@ -18,6 +18,12 @@ namespace SQH.IoC
                 return new DatabaseConfig(connectionString);
             });
 
+            services.AddSingleton<IProjetoRepository, ProjetoRepository>();
+            services.AddSingleton<IProjetoService, ProjetoService>();
+
+            services.AddSingleton<ISharepointRepository, SharepointRepository>();
+            services.AddSingleton<ISharepointService, SharepointService>();
+
             services.AddSingleton<IRecursoRepository, RecursoRepository>();
             services.AddSingleton<IRecursoService, RecursoService>();
 

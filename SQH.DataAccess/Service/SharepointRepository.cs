@@ -2,11 +2,9 @@
 using SQH.Entities.Database;
 using SQH.Entities.Sharepoint;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
@@ -15,45 +13,49 @@ namespace SQH.DataAccess.Service
     public class SharepointRepository : ISharepointRepository
     {
         private readonly IRecursoRepository recursoRepository;
-       // private readonly IProjetoRepository projetoRepository;
+        private readonly IProjetoRepository projetoRepository;
 
-        public SharepointRepository(IRecursoRepository _recursoRepository)
+        public SharepointRepository(IRecursoRepository _recursoRepository, IProjetoRepository _projetoRepository)
         {
             recursoRepository = _recursoRepository;
-            //projetoRepository = _projetoRepository;
+            projetoRepository = _projetoRepository;
         }
 
-        public async void AtualizarProjetos()
+        public void AtualizarProjetos()
         {
             using (var client = InstanciaClient())
             {
-                Feed feed = await ConverteXML(client, @"http://sharepoint.go2wings.com.br/_api/web/lists/getbytitle('projetos')/items");
+                Feed feed = ConverteXML(client, @"http://sharepoint.go2wings.com.br/_api/web/lists/getbytitle('projetos')/items").Result;
 
                 foreach (var entry in feed.entry)
                 {
-                    var user = entry.content.properties;
+                    var proj = entry.content.properties;
 
-                    Recurso rec = recursoRepository.FindByID(user.idUsuario);
+                    Projeto projeto = projetoRepository.FindByID(proj.ID);
 
-                    if (rec == null)
+                    if (projeto == null)
                     {
-                        rec = new Recurso();
-                        rec.Nome = user.Title;
-                        rec.Email = user.Email;
-                        rec.IdRecurso = user.ID;
-                        rec.DataCadastro = DateTime.Now;
+                        projeto = new Projeto();
+                        projeto.DataCadastro = DateTime.Now;
+                        projeto.IdProjeto = proj.ID;
 
-                        recursoRepository.Add(rec);
+                        if (String.IsNullOrEmpty(proj.LiderId))
+                            projeto.IdRecurso = null;
+                        else
+                            Convert.ToInt32(proj.LiderId);
+                        projeto.Nome = proj.Title;
+
+                        projetoRepository.Add(projeto);
                     }
                 }
             }
         }
 
-        public async void AtualizarRecursos()
+        public void AtualizarRecursos()
         {
             using (var client = InstanciaClient())
             {
-                Feed feed = await ConverteXML(client, @"http://sharepoint.go2wings.com.br/_api/Web/SiteUsers");
+                Feed feed = ConverteXML(client, @"http://sharepoint.go2wings.com.br/_api/Web/SiteUsers").Result;
 
                 foreach(var entry in feed.entry)
                 {
@@ -75,6 +77,7 @@ namespace SQH.DataAccess.Service
             }
         }
 
+        #region Métodos Privados
         private HttpClient InstanciaClient()
         {
             HttpClientHandler httpClientHandler = new HttpClientHandler();
@@ -101,5 +104,6 @@ namespace SQH.DataAccess.Service
             }
             return retorno;
         }
+        #endregion
     }
 }
