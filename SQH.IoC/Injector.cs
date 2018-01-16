@@ -5,6 +5,8 @@ using SQH.Business.Service;
 using SQH.DataAccess.Contract;
 using SQH.DataAccess.Service;
 using SQH.Entities.Database;
+using System.Reflection;
+using System.Linq;
 
 namespace SQH.IoC
 {
@@ -18,18 +20,25 @@ namespace SQH.IoC
                 return new DatabaseConfig(connectionString);
             });
 
-            services.AddSingleton<IProjetoRepository, ProjetoRepository>();
-            services.AddSingleton<IProjetoService, ProjetoService>();
+            var types = Assembly.GetExecutingAssembly().GetReferencedAssemblies()
+                        .Select(Assembly.Load)
+                        .SelectMany(x => x.DefinedTypes)
+                        .Where(x => x.IsInterface && 
+                                    x.FullName.StartsWith("SQH") && 
+                                    (x.Name.EndsWith("Repository") || x.Name.EndsWith("Service")));
 
-            services.AddSingleton<ISharepointRepository, SharepointRepository>();
-            services.AddSingleton<ISharepointService, SharepointService>();
+            foreach (var interfaceType in types.Where(t => t.IsInterface))
+            {
+                var concreteType = Assembly
+                        .GetExecutingAssembly()
+                        .GetReferencedAssemblies()
+                        .Select(Assembly.Load)
+                        .SelectMany(x => x.DefinedTypes)
+                        .FirstOrDefault(thisType => !thisType.IsInterface && interfaceType.IsAssignableFrom(thisType));
 
-            services.AddSingleton<IRecursoRepository, RecursoRepository>();
-            services.AddSingleton<IRecursoService, RecursoService>();
-
-            services.AddSingleton<ITipoAlocacaoRepository, TipoAlocacaoRepository>();
-            services.AddSingleton<ITipoAlocacaoService, TipoAlocacaoService>();
+                if (concreteType != null)
+                    services.AddSingleton(interfaceType, concreteType);
+            }
         }
-
     }
 }
