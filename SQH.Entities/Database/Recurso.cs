@@ -28,5 +28,6 @@ namespace SQH.Entities.Database
         public DateTime DataCadastro { get; set; }
 
         public String Nome { get; set; }
+        public String Email { get; set; }
     }
 }
