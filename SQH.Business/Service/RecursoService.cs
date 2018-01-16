@@ -1,9 +1,8 @@
 ﻿using SQH.Business.Contract;
 using SQH.DataAccess.Contract;
 using SQH.Entities.Database;
-using SQH.Entities.Response;
+using SQH.Entities.Response.Recurso;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 

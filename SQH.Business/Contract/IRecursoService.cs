@@ -1,5 +1,5 @@
 ﻿using SQH.Entities.Database;
-using SQH.Entities.Response;
+using SQH.Entities.Response.Recurso;
 using System.Collections.Generic;
 
 namespace SQH.Business.Contract

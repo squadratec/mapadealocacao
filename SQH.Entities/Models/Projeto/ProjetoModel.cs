@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace SQH.Entities.Database
+﻿namespace SQH.Entities.Models.Projeto
 {
-    public class Projeto
+    public class ProjetoModel
     {
         public int IdProjeto { get; set; }
 
@@ -10,6 +8,6 @@ namespace SQH.Entities.Database
 
         public string Nome { get; set; }
 
-        public DateTime DataCadastro { get; set; }
+        public string Lider { get; set; }
     }
 }
