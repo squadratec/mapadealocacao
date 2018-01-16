@@ -6,7 +6,7 @@ using System.Text;
 
 namespace SQH.Entities.Models.TipoAlocacao
 {
-    public class TipoAlocacaoModel
+    public class TipoAlocacaoModel 
     {
         public int IdTipoAlocacao { get; set; }
         [Ignore]

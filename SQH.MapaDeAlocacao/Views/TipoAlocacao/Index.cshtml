@@ -5,21 +5,24 @@
 }
 
 <div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <a asp-action="Create" class="pull-right">
-                <i class="glyphicon glyphicon-plus"></i>
-                <label>Novo tipo de alocação</label>
-            </a>
-        </div>
-    </div>
 
     <div class="row">
         <div class="col-md-12">
-            <table  class="table table-striped table-bordered" cellspacing="0" id="tableTipoAlocacao">
+
+            <h1>Listagem de tipo de alocação</h1>
+            <a asp-action="Create" class="btn btn-success">
+                <span class="glyphicon glyphicon-plus-sign"></span> Novo tipo de alocação
+            </a>
+            <div class="clearfix"></div>
+
+            <hr />
+
+            <table class="table table-striped table-bordered" cellspacing="0" id="tableTipoAlocacao">
                 <thead>
                     <tr>
                         <th>Nome</th>
+                        <th>Sigla</th>
+                        <th>Cor</th>
                         <th style="text-align:center">Ação</th>
                     </tr>
                 </thead>
@@ -30,13 +33,21 @@
                             <td>
                                 @item.Nome
                             </td>
+                            <td>
+                                @item.Sigla
+                            </td>
+                            <td style="background-color:@item.Cor">
+                            </td>
                             <td style="text-align:center">
                                 <a asp-action="Create" asp-route-id="@item.IdTipoAlocacao" title="Editar">
                                     <i class="glyphicon glyphicon-pencil"></i>
                                 </a>
-                                <a asp-action="Delete" asp-route-id="@item.IdTipoAlocacao" title="Deletar">
+                                <a href="javscript:;" data-toggle="modal" data-target="#@item.IdTipoAlocacao" title="Deletar">
                                     <i class="glyphicon glyphicon-trash"></i>
                                 </a>
+
+                                @Html.Partial("_Modal", new DeletarViewModel() { Id = item.IdTipoAlocacao, Nome = item.Nome })
+
                             </td>
                         </tr>
                     }
