@@ -25,8 +25,9 @@ namespace SQH.MapaDeAlocacao.Controllers
 
             objs.ToList().ForEach(x => model.Add(new RecursoListaModel()
             {
-                Id = x.IdRecurso,
-                Nome = x.Nome
+                Id = x.Id,
+                Nome = x.Nome,
+                Email = x.Email
             }));
 
             return View(model);

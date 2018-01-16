@@ -1,4 +1,5 @@
 ﻿using SQH.Entities.Database;
+using SQH.Entities.Response;
 using System.Collections.Generic;
 
 namespace SQH.Business.Contract
@@ -9,7 +10,7 @@ namespace SQH.Business.Contract
 
         Recurso ObterPorId(int id);
 
-        IEnumerable<Recurso> ObtemTodos();
+        IEnumerable<RecursoResponse> ObtemTodos();
 
         bool Editar(Entities.Models.Recurso.RecursoModel model);
 

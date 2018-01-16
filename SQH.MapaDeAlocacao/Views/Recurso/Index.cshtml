@@ -1,26 +1,23 @@
 ﻿@{
-    ViewData["Title"] = "Listar Recursos";
+    ViewData["Title"] = "Listagem de Recursos";
 }
 
 @model IEnumerable<SQH.Entities.Models.Recurso.RecursoListaModel>
 
 <div class="container">
-    <div class="row">
+    <div class="row" style="margin-bottom: 1%;">
         <div class="col-md-12">
-            <a asp-action="Create" class="pull-right">
-                <i class="glyphicon glyphicon-plus"></i>
-                <label>Novo Recurso</label>
-            </a>
+            <button type="submit" class="btn btn-info">Atualizar Registros</button>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-12">
-            <table class="table table-hover" id="tableRecurso">
+            <table class="table table-striped table-bordered" cellspacing="0" id="tableRecurso">
                 <thead>
                     <tr>
                         <th>Nome</th>
-                        <th style="text-align:center">Ação</th>
+                        <th>Email</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -30,13 +27,8 @@
                             <td>
                                 @item.Nome
                             </td>
-                            <td style="text-align:center">
-                                <a asp-action="Edit" asp-route-id="@item.Id" title="Editar">
-                                    <i class="glyphicon glyphicon-pencil"></i>
-                                </a>
-                                <a asp-action="Delete" asp-route-id="@item.Id" title="Deletar">
-                                    <i class="glyphicon glyphicon-trash"></i>
-                                </a>
+                            <td>
+                                @item.Email
                             </td>
                         </tr>
                     }
@@ -45,6 +37,8 @@
         </div>
     </div>
 </div>
+
+
 
 @section Scripts{
     <script src="~/app/js/Recurso/IndexRecurso.js"></script>

@@ -1,6 +1,7 @@
 ﻿using SQH.Business.Contract;
 using SQH.DataAccess.Contract;
 using SQH.Entities.Database;
+using SQH.Entities.Response;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -24,11 +25,20 @@ namespace SQH.Business.Service
             return obj;
         }
 
-        public IEnumerable<Recurso> ObtemTodos()
+        public IEnumerable<RecursoResponse> ObtemTodos()
         {
-            var objs = _recursoRepository.FindAll();
+            var objs = _recursoRepository.FindAll().OrderBy(x => x.Nome);
 
-            return objs;
+            var retorno = new List<RecursoResponse>();
+
+            objs.ToList().ForEach(x => retorno.Add(new RecursoResponse()
+            {
+                Email = x.Email,
+                Id = x.IdRecurso,
+                Nome = x.Nome
+            }));
+
+            return retorno;
         }
 
         public bool Incluir(Entities.Models.Recurso.RecursoModel model)

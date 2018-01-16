@@ -7,7 +7,7 @@
             'aaSorting': [],
             'columnDefs': [
                 { 'targets': 0, "orderable": true },
-                { 'targets': 1, "orderable": false }
+                { 'targets': 1, "orderable": true }
             ]
         });
     });

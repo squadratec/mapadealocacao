@@ -1,6 +1,6 @@
-﻿namespace SQH.Entities.Models.Recurso
+﻿namespace SQH.Entities.Response
 {
-    public class RecursoListaModel
+    public class RecursoResponse
     {
         public int Id { get; set; }
 
