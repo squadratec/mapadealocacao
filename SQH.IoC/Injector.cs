@@ -4,6 +4,7 @@ using SQH.Business.Contract;
 using SQH.Business.Service;
 using SQH.DataAccess.Contract;
 using SQH.DataAccess.Service;
+using System;
 using System.Linq;
 using System.Reflection;
 
@@ -31,25 +32,6 @@ namespace SQH.IoC
 
             services.AddSingleton<ITipoAlocacaoRepository, TipoAlocacaoRepository>();
             services.AddSingleton<ITipoAlocacaoService, TipoAlocacaoService>();
-            //var types = Assembly.GetExecutingAssembly().GetReferencedAssemblies()
-            //            .Select(Assembly.Load)
-            //            .SelectMany(x => x.DefinedTypes)
-            //            .Where(x => x.IsInterface && 
-            //                        x.FullName.StartsWith("SQH") && 
-            //                        (x.Name.EndsWith("Repository") || x.Name.EndsWith("Service")));
-
-            //foreach (var interfaceType in types.Where(t => t.IsInterface))
-            //{
-            //    var concreteType = Assembly
-            //            .GetExecutingAssembly()
-            //            .GetReferencedAssemblies()
-            //            .Select(Assembly.Load)
-            //            .SelectMany(x => x.DefinedTypes)
-            //            .FirstOrDefault(thisType => !thisType.IsInterface && interfaceType.IsAssignableFrom(thisType));
-
-            //    if (concreteType != null)
-            //        services.AddSingleton(interfaceType, concreteType);
-            //}
         }
     }
 }
