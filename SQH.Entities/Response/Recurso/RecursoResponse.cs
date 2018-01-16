@@ -1,4 +1,4 @@
-﻿namespace SQH.Entities.Response
+﻿namespace SQH.Entities.Response.Recurso
 {
     public class RecursoResponse
     {

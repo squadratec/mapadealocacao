@@ -20,8 +20,4 @@
     <ProjectReference Include="..\SQH.Shared\SQH.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Projeto\" />
-  </ItemGroup>
-
 </Project>

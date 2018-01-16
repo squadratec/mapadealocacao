@@ -1,11 +1,10 @@
-﻿using System;
+﻿using SQH.Entities.Response.Projeto;
 using System.Collections.Generic;
-using System.Text;
 
 namespace SQH.Business.Contract
 {
     public interface IProjetoService
     {
-
+        IEnumerable<ProjetoResponse> ObtemTodos();
     }
 }

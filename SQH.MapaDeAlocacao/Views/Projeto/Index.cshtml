@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewData["Title"] = "Listagem de Projetos";
+}
+
+@model IEnumerable<SQH.Entities.Models.Projeto.ProjetoModel>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped table-bordered" cellspacing="0" id="tableProjeto">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Líder</th>
+                        <th style="text-align:center">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @item.Nome
+                            </td>
+                            <td>
+                                @item.Lider
+                            </td>
+                            <td style="text-align:center">
+                                <a href="" title="Definir Mapa de Alocação">
+                                    <i class="glyphicon glyphicon-edit"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/app/js/Projeto/IndexProjeto.js"></script>
+}
