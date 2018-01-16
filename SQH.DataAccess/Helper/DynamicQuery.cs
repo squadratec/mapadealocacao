@@ -107,6 +107,7 @@ namespace SQH.DataAccess.Helper
             return string.Format("UPDATE {0} SET {1} WHERE {2}={3}", tableName, string.Join(",", parameters), dic.Key, dic.Value);
         }
 
+
         /// <summary>
         /// Gets the dynamic query.
         /// </summary>

@@ -4,7 +4,9 @@ using SQH.Business.Contract;
 using SQH.Business.Service;
 using SQH.DataAccess.Contract;
 using SQH.DataAccess.Service;
-using SQH.Entities.Database;
+using System;
+using System.Linq;
+using System.Reflection;
 
 namespace SQH.IoC
 {
@@ -18,6 +20,7 @@ namespace SQH.IoC
                 return new DatabaseConfig(connectionString);
             });
 
+
             services.AddSingleton<IProjetoRepository, ProjetoRepository>();
             services.AddSingleton<IProjetoService, ProjetoService>();
 
@@ -30,6 +33,5 @@ namespace SQH.IoC
             services.AddSingleton<ITipoAlocacaoRepository, TipoAlocacaoRepository>();
             services.AddSingleton<ITipoAlocacaoService, TipoAlocacaoService>();
         }
-
     }
 }

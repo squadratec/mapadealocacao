@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using SQH.Business.Contract;
 using SQH.Entities.Models.TipoAlocacao;
 using System;
@@ -30,9 +31,10 @@ namespace SQH.MapaDeAlocacao.Controllers
             objs.ToList().ForEach(x => model.Add(new TipoAlocacaoModel()
             {
                 IdTipoAlocacao = x.IdTipoAlocacao,
-                Nome = x.Nome
+                Nome = x.Nome,
+                Cor = x.Cor,
+                Sigla = x.Sigla
             }));
-
             return View(model);
         }
 
