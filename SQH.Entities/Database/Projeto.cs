@@ -6,7 +6,7 @@ namespace SQH.Entities.Database
     {
         public int IdProjeto { get; set; }
 
-        public int IdRecurso { get; set; }
+        public int? IdRecurso { get; set; }
 
         public string Nome { get; set; }
 
