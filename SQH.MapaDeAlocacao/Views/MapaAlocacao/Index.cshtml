@@ -9,14 +9,14 @@
 @section Styles{
     <style>
 
-        .tabco1 {
+        .scroll .tabco1 {
             background: #fff;
             width: 40%;
             padding: 10px !important;
             width: 140px;
         }
 
-        th.tabco1 {
+        .scroll th.tabco1 {
             background: #fff;
             padding: 32px 10px !important;
             font-size: 18px;
@@ -24,13 +24,13 @@
             color: #000;
         }
 
-        .tabco2 {
+        .scroll .tabco2 {
             background: #009688;
             text-align: center;
             color: #fff;
         }
 
-        th.tabTheDreamTeam, .colRecurso {
+        .scroll th.tabTheDreamTeam, .colRecurso {
             background: #00C853;
             padding: 20px 5px !important;
             text-transform: uppercase;
@@ -40,42 +40,42 @@
             color: #FFF;
         }
 
-            th.tabTheDreamTeam:last-child, td:last-child {
+            .scroll th.tabTheDreamTeam:last-child, .scroll td:last-child {
                 border-right: none;
             }
 
-        .tabco3 {
+        .scroll .tabco3 {
             background: #03A9F4;
             text-align: center;
             color: #fff;
         }
 
-        th.tabco3 {
+        .scroll th.tabco3 {
             background: #039BE5;
             padding: 20px 10px !important;
             font-size: 18px;
             text-transform: uppercase;
         }
 
-        .tabco4 {
+        .scroll .tabco4 {
             background: #EF5350;
             text-align: center;
             color: #fff;
         }
 
-        th.tabco4 {
+        .scroll th.tabco4 {
             background: #E53935;
             padding: 20px 10px !important;
             font-size: 18px;
             text-transform: uppercase;
         }
 
-        span {
+        .scroll span {
             width: 140px;
             display: block;
         }
 
-        td, th {
+        .scroll td, th {
             height: 54px;
         }
 
@@ -87,32 +87,61 @@
             margin-left: 140px;
             overflow-x: scroll;
             padding-bottom: 5px;
-            width: 85%;
         }
 
-        tr th:first-child, tr td:first-child {
-            border-left: solid 1px #DDEFEF;
-            border-right: solid 1px #DDEFEF;
-            left: 0;
-            position: absolute;
-            top: auto;
-        }
+            .scroll tr th:first-child, .scroll tr td:first-child {
+                border-left: solid 1px #DDEFEF;
+                border-right: solid 1px #DDEFEF;
+                left: 0;
+                position: absolute;
+                top: auto;
+            }
 
-        table {
-            width: auto !important;
-            max-width: none !important;
-        }
+            .scroll table {
+                width: auto !important;
+                max-width: none !important;
+            }
 
-        .fixed {
-            border: 0 !important;
-        }
+            .scroll .fixed {
+                border: 0 !important;
+            }
     </style>
 }
 
-<div id="PricingTab">
-    <div class="container">
-        <h2>Our Sample Pricing</h2>
-        <hr class="White-Yellow">
+
+<div class="container">
+    <h2>Mapa de alocação</h2>
+    <hr class="White-Yellow">
+    <div class="col-md-3 pull-right">
+        <h3 class="col-md-12 small text-center"><strong>Legenda</strong></h3>
+        <table class="table-condensed table-hover col-md-12 pull-right">
+            <tbody>
+                <tr>
+                    @foreach (var itemTipoAlocacao in Model.TipoAlocacao)
+                    {
+                        <td class="text-center" style="background-color:@itemTipoAlocacao.Cor">
+                            <span data-toggle="tooltip" data-placement="top" title="@itemTipoAlocacao.Nome">@itemTipoAlocacao.Sigla</span>
+                        </td>
+                    }
+                </tr>
+            </tbody>
+        </table>
+
+        <h3 class="col-md-12 small text-center"><strong>Frente de alocação</strong></h3>
+        <table class="table-condensed table-striped table-hover col-md-12 pull-right">
+            <tbody>
+                @foreach (var itemProjetos in Model.Projetos)
+                {
+                    <tr>
+                        <td class="text-center">@itemProjetos.IdProjeto</td>
+                        <td class="text-center">@itemProjetos.Nome</td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-9">
         <div class="row">
             <div class="scroll">
                 <table class="table table-condensed table-hover">
@@ -132,12 +161,12 @@
                             <td class="tabco1">Qua 17/01/2018</td>
                             @foreach (var itemRecurso in Model.Recurso)
                             {
-                                <td class="colRecurso tabco2"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
+                                <td class="colRecurso tabco2"></td>
                             }
                         </tr>
                     </tbody>
                 </table>
             </div>
-        </div><!--row-->
-    </div><!--container-->
-</div><!--PricingTab-->
+        </div>
+    </div>
+</div>

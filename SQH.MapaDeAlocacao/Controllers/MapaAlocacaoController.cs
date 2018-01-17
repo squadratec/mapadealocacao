@@ -14,10 +14,14 @@ namespace SQH.MapaDeAlocacao.Controllers
     public class MapaAlocacaoController : Controller
     {
         private readonly IRecursoService _recursoService;
+        private readonly ITipoAlocacaoService _tipoAlocacaoService;
+        private readonly IProjetoService _projetoService;
 
-        public MapaAlocacaoController(IRecursoService recursoService)
+        public MapaAlocacaoController(IRecursoService recursoService, ITipoAlocacaoService tipoAlocacaoService, IProjetoService projetoService)
         {
             _recursoService = recursoService;
+            _tipoAlocacaoService = tipoAlocacaoService;
+            _projetoService = projetoService;
         }
 
         public ActionResult Index()
@@ -25,7 +29,8 @@ namespace SQH.MapaDeAlocacao.Controllers
             MapaAlocacaoModel model = new MapaAlocacaoModel();
 
             model.Recurso = _recursoService.Find(x => x.Apropriar == 1).ToList();
-
+            model.TipoAlocacao = _tipoAlocacaoService.ObtemTodos().ToList();
+            model.Projetos = _projetoService.ObtemTodos().ToList();
             return View(model);
         }
     }

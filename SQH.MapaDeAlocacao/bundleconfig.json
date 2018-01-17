@@ -16,7 +16,8 @@
       "wwwroot/app/js/Recurso/CreateRecurso.js",
       "wwwroot/app/js/Recurso/EditRecurso.js",
       "wwwroot/app/js/Recurso/IndexRecurso.js",
-      "wwwroot/app/js/TipoAlocacao/IndexTipoAlocacao.js"
+      "wwwroot/app/js/TipoAlocacao/IndexTipoAlocacao.js",
+      "wwwroot/app/js/MapaAlocacao/MapaAlocacao.js"
     ],
     // Optionally specify minification options
     "minify": {

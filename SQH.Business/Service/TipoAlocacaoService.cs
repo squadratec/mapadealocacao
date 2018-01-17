@@ -1,7 +1,9 @@
 ﻿using SQH.Business.Contract;
 using SQH.DataAccess.Contract;
 using SQH.Entities.Database;
+using SQH.Entities.Response.TipoAlocacao;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SQH.Business.Service
 {
@@ -19,11 +21,21 @@ namespace SQH.Business.Service
             return _tipoAlocacaoRepository.FindByID(id);
         }
 
-        public IEnumerable<tipo_alocacao> ObtemTodos()
+        public IEnumerable<TipoAlocacaoResponse> ObtemTodos()
         {
             var objs = _tipoAlocacaoRepository.FindAll();
 
-            return objs;
+            var retorno = new List<TipoAlocacaoResponse>();
+
+            objs.ToList().ForEach(x => retorno.Add(new TipoAlocacaoResponse()
+            {
+                Cor = x.Cor,
+                IdTipoAlocacao = x.IdTipoAlocacao,
+                Nome = x.Nome,
+                Sigla = x.Sigla
+            }));
+
+            return retorno;
         }
 
         public bool Incluir(Entities.Models.TipoAlocacao.TipoAlocacaoModel model)
