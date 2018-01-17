@@ -1,5 +1,11 @@
-﻿@{
+﻿@model SQH.Entities.Models.MapaAlocacao.MapaAlocacaoModel
+
+
+@{
+    ViewData["Title"] = "teste";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 @section Styles{
     <style>
 
@@ -24,7 +30,7 @@
             color: #fff;
         }
 
-        th.tabTheDreamTeam {
+        th.tabTheDreamTeam, .colRecurso {
             background: #00C853;
             padding: 20px 5px !important;
             text-transform: uppercase;
@@ -34,7 +40,7 @@
             color: #FFF;
         }
 
-            th.tabTheDreamTeam:last-child {
+            th.tabTheDreamTeam:last-child, td:last-child {
                 border-right: none;
             }
 
@@ -81,7 +87,7 @@
             margin-left: 140px;
             overflow-x: scroll;
             padding-bottom: 5px;
-            width:85%;
+            width: 85%;
         }
 
         tr th:first-child, tr td:first-child {
@@ -113,109 +119,21 @@
                     <thead>
                         <tr>
                             <th class="tabco1 fixed"></th>
-                            <th class="tabTheDreamTeam small text-center">
-                                <span>Vitor Ávila Nascimento</span>
-                            </th>
-                            <th class="tabTheDreamTeam small text-center">
-                                <span>Felipe Corsino Saviotte</span>
-                            </th>
-                            <th class="tabTheDreamTeam small text-center">
-                                <span>Rodrigo dos Santos de Oliveira Reis</span>
-                            </th>
-                            <th class="tabTheDreamTeam small text-center">
-                                <span>Bruno Polito Barrote</span>
-                            </th>
-                            <th class="tabTheDreamTeam small text-center">
-                                <span>Henrique Lago Pinheiro Ferreira</span>
-                            </th>
-                            <th class="tabTheDreamTeam small text-center">
-                                <span>Adelaide Antunes Fernandes Eugenio</span>
-                            </th>
-                            <th class="tabTheDreamTeam small text-center">
-                                <span>Fagner Andrade de Oliveira</span>
-                            </th>
-                            <th class="tabTheDreamTeam small text-center">
-                                <span>Júlio César de Morais</span>
-                            </th>
+                            @foreach (var itemRecurso in Model.Recurso)
+                            {
+                                <th class="tabTheDreamTeam small text-center">
+                                    <span>@itemRecurso.Nome</span>
+                                </th>
+                            }
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td class="tabco1">Qua 17/01/2018</td>
-                            <td class="tabco2"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco3"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco4"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco2"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco3"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco4"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco2"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco3"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                        </tr>
-                        <tr>
-                            <td class="tabco1">Qua 18/01/2018</td>
-                            <td class="tabco2"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco3"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco4"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco2"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco3"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco4"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco2"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco3"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                        </tr>
-                        <tr>
-                            <td class="tabco1">Qua 17/01/2018</td>
-                            <td class="tabco2"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco3"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco4"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco2"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco3"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco4"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco2"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco3"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                        </tr>
-                        <tr>
-                            <td class="tabco1">Qua 17/01/2018</td>
-                            <td class="tabco2"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco3"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco4"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco2"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco3"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco4"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco2"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco3"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                        </tr>
-                        <tr>
-                            <td class="tabco1">Qua 17/01/2018</td>
-                            <td class="tabco2"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco3"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco4"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco2"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco3"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco4"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco2"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco3"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                        </tr>
-                        <tr>
-                            <td class="tabco1">Qua 17/01/2018</td>
-                            <td class="tabco2"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco3"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco4"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco2"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco3"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco4"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco2"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco3"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                        </tr>
-                        <tr>
-                            <td class="tabco1">Qua 17/01/2018</td>
-                            <td class="tabco2"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco3"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco4"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco2"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco3"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco4"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco2"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
-                            <td class="tabco3"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
+                            @foreach (var itemRecurso in Model.Recurso)
+                            {
+                                <td class="colRecurso tabco2"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
+                            }
                         </tr>
                     </tbody>
                 </table>

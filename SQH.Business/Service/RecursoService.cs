@@ -5,6 +5,7 @@ using SQH.Entities.Response.Recurso;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace SQH.Business.Service
 {
@@ -22,6 +23,22 @@ namespace SQH.Business.Service
             var obj = _recursoRepository.FindByID(id);
 
             return obj;
+        }
+
+        public IEnumerable<RecursoResponse> Find(Expression<Func<Recurso, bool>> predicate)
+        {
+            var objs = _recursoRepository.Find(predicate).OrderBy(x => x.Nome);
+
+            var retorno = new List<RecursoResponse>();
+
+            objs.ToList().ForEach(x => retorno.Add(new RecursoResponse()
+            {
+                Email = x.Email,
+                Id = x.IdRecurso,
+                Nome = x.Nome
+            }));
+
+            return retorno;
         }
 
         public IEnumerable<RecursoResponse> ObtemTodos()
