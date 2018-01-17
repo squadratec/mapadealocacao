@@ -34,7 +34,7 @@ namespace SQH.Business.Service
             return objs;
         }
 
-        public bool Incluir(Entities.Models.Alocacao.RecursoAlocacao model)
+        public bool Incluir(Entities.Models.Alocacao.RecursoAlocacaoModel model)
         {
             if (!IsTipoAlocacao(model.IdRecurso, model.IdAlocacao))
             {
@@ -47,7 +47,7 @@ namespace SQH.Business.Service
             }
         }
 
-        public bool Editar(Entities.Models.Alocacao.RecursoAlocacao model)
+        public bool Editar(Entities.Models.Alocacao.RecursoAlocacaoModel model)
         {
             if (IsTipoAlocacao(model.IdRecurso, model.IdAlocacao))
             {

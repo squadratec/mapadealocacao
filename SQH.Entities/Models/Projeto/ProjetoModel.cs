@@ -7,13 +7,13 @@ namespace SQH.Entities.Models.Projeto
     {
         public ProjetoModel()
         {
-            Alocacoes = new List<AlocacaoProjeto>();
+            Alocacoes = new List<AlocacaoProjetoModel>();
         }
 
         public int Id { get; set; }
 
         public int IdRecurso { get; set; }
 
-        public IList<AlocacaoProjeto> Alocacoes { get; set; }
+        public IList<AlocacaoProjetoModel> Alocacoes { get; set; }
     }
 }

@@ -1,14 +1,13 @@
-﻿using SQH.Shared.Attributes;
-using System;
+﻿using System;
 
-namespace SQH.Entities.Database
+namespace SQH.Entities.Response.Alocacao
 {
-    public class alocacao_projeto
+    public class AlocacaoProjetoResponse
     {
-        [PrimaryKey]
         public int IdAlocacao { get; set; }
         public int IdProjeto { get; set; }
         public int IdTipoAlocacao { get; set; }
+        public string TipoAlocacao { get; set; }
         public DateTime DataInicio { get; set; }
         public DateTime DataFim { get; set; }
     }
