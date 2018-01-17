@@ -33,6 +33,9 @@ namespace SQH.IoC
             services.AddSingleton<ITipoAlocacaoRepository, TipoAlocacaoRepository>();
             services.AddSingleton<ITipoAlocacaoService, TipoAlocacaoService>();
 
+            services.AddSingleton<ISQHorasRepository, SQHorasRepository>();
+            services.AddSingleton<IAutenticacaoService, AutenticacaoService>();
+
             services.AddSingleton<IAlocacaoProjetoRepository, AlocacaoProjetoRepository>();
             services.AddSingleton<IAlocacaoProjetoService, AlocacaoProjetoService>();
         }
