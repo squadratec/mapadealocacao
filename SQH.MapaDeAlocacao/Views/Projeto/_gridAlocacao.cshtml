@@ -1,13 +1,12 @@
 ﻿@model SQH.Entities.Models.Projeto.ProjetoModel
 
-<table class="table table-striped">
+<table class="table table-striped table-bordered" cellspacing="0">
     <thead>
         <tr>
-            <th width="15%">Tipo de Alocação</th>
-            <th width="20%">Período Inicial</th>
-            <th width="20%">Período Final</th>
-            <th width="40%">Recursos</th>
-            <th width="5%" class="text-center">Ações</th>
+            <th>Tipo de Alocação</th>
+            <th>Período Inicial</th>
+            <th>Período Final</th>
+            <th class="text-center">Ações</th>
         </tr>
     </thead>
     <tbody>
@@ -20,15 +19,20 @@
                     <input type="hidden" asp-for="@item.IdAlocacao" />
                 </td>
                 <td>
-                    <input type="text" class="form-control data" asp-for="@item.DataInicio"/>
+                    @item.DataInicio.ToShortDateString()
                 </td>
                 <td>
-                    <input type="text" class="form-control data" asp-for="@item.DataFinal" />
+                    @item.DataFinal.ToShortDateString()
                 </td>
-                <td></td>
                 <td class="text-center">
-                    <a href="#">
+                    <a href="#" title="Editar Período">
+                        <i class="glyphicon glyphicon-pencil"></i>
+                    </a>
+                    <a href="#" title="Editar Recursos">
                         <i class="glyphicon glyphicon-edit"></i>
+                    </a>
+                    <a href="#" title="Remover Alocação">
+                        <i class="glyphicon glyphicon-trash"></i>
                     </a>
                 </td>
             </tr>

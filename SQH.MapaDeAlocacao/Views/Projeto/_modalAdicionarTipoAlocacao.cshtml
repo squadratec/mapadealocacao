@@ -1,0 +1,40 @@
+﻿<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modalSalvarTipoAlocacao">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">Salvar Alocação</h4>
+            </div>
+            <div class="modal-body">
+                <form asp-action="SalvarAlocacao" class="form-horizontal" method="post" id="formSalvarAlocacao">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"></label>
+                        <div class="col-md-9">
+                            <select class="form-control"></select>
+                            @*<span asp-validation-for="Nome" class="text-danger"></span>*@
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"></label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control data" />
+                            @*<span asp-validation-for="Nome" class="text-danger"></span>*@
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"></label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control data" />
+                            @*<span asp-validation-for="Nome" class="text-danger"></span>*@
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>

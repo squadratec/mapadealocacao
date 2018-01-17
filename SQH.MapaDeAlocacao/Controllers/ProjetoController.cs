@@ -55,15 +55,7 @@ namespace SQH.MapaDeAlocacao.Controllers
         private ProjetoModel PreencheModelProjeto()
         {
             var model = new ProjetoModel();
-            var tiposAlocacoes = ObtemTiposAcalocao();
-
-            tiposAlocacoes.ToList().ForEach
-                (x => model.Alocacoes.Add(new AlocacaoProjeto()
-                {
-                    IdTipoAlocacao = x.IdTipoAlocacao,
-                    TipoAlocacao = x.Nome
-                }));
-
+            
             return model;
         }
     }
