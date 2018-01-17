@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace SQH.MapaDeAlocacao
 {
@@ -23,6 +24,13 @@ namespace SQH.MapaDeAlocacao
         {
             SQH.IoC.Injector.RegisterIoC(services, Configuration);
 
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(config =>
+            {
+                config.LoginPath = "/login";
+                config.LogoutPath = "/logout";
+                config.AccessDeniedPath = "/logout";
+            });
+
             services.AddMvc();
         }
 
@@ -39,6 +47,7 @@ namespace SQH.MapaDeAlocacao
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            app.UseAuthentication();
             app.UseStaticFiles();
 
             app.UseMvc(routes =>
