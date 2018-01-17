@@ -34,7 +34,7 @@ namespace SQH.MapaDeAlocacao.Controllers
                 Nome = x.Nome,
                 Lider = x.Lider
             }));
-
+                
             return View(model);
         }
 

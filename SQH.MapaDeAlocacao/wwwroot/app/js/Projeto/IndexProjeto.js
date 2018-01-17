@@ -10,6 +10,6 @@
                 { 'targets': 1, "orderable": true },
                 { 'targets': 2, "orderable": false }
             ]
-        });
+        });        
     });
 })();
