@@ -45,9 +45,8 @@
                                     <i class="glyphicon glyphicon-trash"></i>
                                 </a>
 
-                                @*@Html.Partial("_Modal", new DeletarViewModel() { Id = item.IdTipoAlocacao, Nome = item.Nome })*@
+                                @Html.Partial("_Modal", new DeletarViewModel() { Id = item.IdTipoAlocacao, Nome = item.Nome })
 
-                                @Html.Partial("_AlocacaoProjeto", new SQH.Entities.Models.Alocacao.RecursoAlocacao() { IdAlocacao = 1, IdRecurso = 0, DataFinal = DateTime.Now, DataInicio = DateTime.Now })
 
 
                             </td>
