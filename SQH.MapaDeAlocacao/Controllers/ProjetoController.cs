@@ -7,6 +7,7 @@ using SQH.Business.Contract;
 using SQH.Entities.Models.Projeto;
 using SQH.Entities.Database;
 using SQH.Entities.Models.Alocacao;
+using SQH.Entities.Response.Alocacao;
 
 namespace SQH.MapaDeAlocacao.Controllers
 {
@@ -14,11 +15,13 @@ namespace SQH.MapaDeAlocacao.Controllers
     {
         private readonly IProjetoService _projetoService;
         private readonly ITipoAlocacaoService _tipoAlocacaoService;
+        private readonly IAlocacaoProjetoService _alocacaoProjetoService;
 
-        public ProjetoController(IProjetoService projetoService, ITipoAlocacaoService tipoAlocacaoService)
+        public ProjetoController(IProjetoService projetoService, ITipoAlocacaoService tipoAlocacaoService, IAlocacaoProjetoService alocacaoProjetoService)
         {
             _projetoService = projetoService;
             _tipoAlocacaoService = tipoAlocacaoService;
+            _alocacaoProjetoService = alocacaoProjetoService;
         }
 
         public IActionResult Index()
@@ -34,28 +37,39 @@ namespace SQH.MapaDeAlocacao.Controllers
                 Nome = x.Nome,
                 Lider = x.Lider
             }));
-                
+
             return View(model);
         }
 
         public IActionResult Edit(int id)
         {
-            var model = PreencheModelProjeto();
+            var model = PreencheModelProjeto(id);
 
             return View(model);
         }
 
-        private IEnumerable<tipo_alocacao> ObtemTiposAcalocao()
+        private IEnumerable<AlocacaoProjetoResponse> ObtemAlocacoesProjeto(int idProjeto)
         {
-            var tiposAlocacao = _tipoAlocacaoService.ObtemTodos();
+            var alocacoesProjeto = _alocacaoProjetoService.ObtemAlocacoesPorProjeto(idProjeto);
 
-            return tiposAlocacao;
+            return alocacoesProjeto;
         }
 
-        private ProjetoModel PreencheModelProjeto()
+        private ProjetoModel PreencheModelProjeto(int idProjeto)
         {
             var model = new ProjetoModel();
-            
+
+            var alocacoesProjeto = ObtemAlocacoesProjeto(idProjeto);
+            alocacoesProjeto.ToList().ForEach(x => model.Alocacoes.Add(new AlocacaoProjetoModel()
+            {
+                DataFim = x.DataFim,
+                DataInicio = x.DataInicio,
+                IdAlocacao = x.IdAlocacao,
+                IdProjeto = x.IdProjeto,
+                IdTipoAlocacao = x.IdTipoAlocacao,
+                TipoAlocacao = x.TipoAlocacao
+            }));
+
             return model;
         }
     }

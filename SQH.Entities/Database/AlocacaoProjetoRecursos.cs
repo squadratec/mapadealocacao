@@ -7,7 +7,7 @@ namespace SQH.Entities.Database
 {
     public class alocacao_projeto_recursos
     {
-        public alocacao_projeto_recursos(Entities.Models.Alocacao.RecursoAlocacao RecursoAlocacao)
+        public alocacao_projeto_recursos(Entities.Models.Alocacao.RecursoAlocacaoModel RecursoAlocacao)
         {
             IdAlocacao = RecursoAlocacao.IdAlocacao;
             IdRecurso = RecursoAlocacao.IdRecurso;

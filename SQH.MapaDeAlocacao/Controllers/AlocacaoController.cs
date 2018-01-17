@@ -21,7 +21,7 @@ namespace SQH.MapaDeAlocacao.Controllers
 
         [HttpPost, Route("CreateAlocacaoRecurso", Name = "AlocacaoRecursoPost")]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateAlocacaoRecurso(RecursoAlocacao model)
+        public ActionResult CreateAlocacaoRecurso(RecursoAlocacaoModel model)
         {
             try
             {

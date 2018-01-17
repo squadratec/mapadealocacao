@@ -2,7 +2,7 @@
 
 namespace SQH.Entities.Models.Alocacao
 {
-    public class RecursoAlocacao
+    public class RecursoAlocacaoModel
     {
         public int IdAlocacao { get; set; }
 
