@@ -9,6 +9,24 @@
     ]
   },
   {
+    "outputFileName": "wwwroot/app/app.min.js",
+    "inputFiles": [
+      "wwwroot/app/js/Projeto/EditProjeto.js",
+      "wwwroot/app/js/Projeto/IndexProjeto.js",
+      "wwwroot/app/js/Recurso/CreateRecurso.js",
+      "wwwroot/app/js/Recurso/EditRecurso.js",
+      "wwwroot/app/js/Recurso/IndexRecurso.js",
+      "wwwroot/app/js/TipoAlocacao/IndexTipoAlocacao.js"
+    ],
+    // Optionally specify minification options
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    // Optionally generate .map file
+    "sourceMap": false
+  },
+  {
     "outputFileName": "wwwroot/js/site.min.js",
     "inputFiles": [
       "wwwroot/js/site.js"
