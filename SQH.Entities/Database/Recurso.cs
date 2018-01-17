@@ -29,5 +29,7 @@ namespace SQH.Entities.Database
 
         public String Nome { get; set; }
         public String Email { get; set; }
+
+        public int Apropriar { get; set; }
     }
 }

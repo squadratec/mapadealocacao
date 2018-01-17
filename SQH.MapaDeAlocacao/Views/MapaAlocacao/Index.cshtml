@@ -1,0 +1,143 @@
+﻿@model SQH.Entities.Models.MapaAlocacao.MapaAlocacaoModel
+
+
+@{
+    ViewData["Title"] = "teste";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles{
+    <style>
+
+        .tabco1 {
+            background: #fff;
+            width: 40%;
+            padding: 10px !important;
+            width: 140px;
+        }
+
+        th.tabco1 {
+            background: #fff;
+            padding: 32px 10px !important;
+            font-size: 18px;
+            text-transform: uppercase;
+            color: #000;
+        }
+
+        .tabco2 {
+            background: #009688;
+            text-align: center;
+            color: #fff;
+        }
+
+        th.tabTheDreamTeam, .colRecurso {
+            background: #00C853;
+            padding: 20px 5px !important;
+            text-transform: uppercase;
+            border-right: 2px solid #ddd;
+            vertical-align: middle;
+            font-weight: bold;
+            color: #FFF;
+        }
+
+            th.tabTheDreamTeam:last-child, td:last-child {
+                border-right: none;
+            }
+
+        .tabco3 {
+            background: #03A9F4;
+            text-align: center;
+            color: #fff;
+        }
+
+        th.tabco3 {
+            background: #039BE5;
+            padding: 20px 10px !important;
+            font-size: 18px;
+            text-transform: uppercase;
+        }
+
+        .tabco4 {
+            background: #EF5350;
+            text-align: center;
+            color: #fff;
+        }
+
+        th.tabco4 {
+            background: #E53935;
+            padding: 20px 10px !important;
+            font-size: 18px;
+            text-transform: uppercase;
+        }
+
+        span {
+            width: 140px;
+            display: block;
+        }
+
+        td, th {
+            height: 54px;
+        }
+
+        #PricingTab {
+            position: relative;
+        }
+
+        .scroll {
+            margin-left: 140px;
+            overflow-x: scroll;
+            padding-bottom: 5px;
+            width: 85%;
+        }
+
+        tr th:first-child, tr td:first-child {
+            border-left: solid 1px #DDEFEF;
+            border-right: solid 1px #DDEFEF;
+            left: 0;
+            position: absolute;
+            top: auto;
+        }
+
+        table {
+            width: auto !important;
+            max-width: none !important;
+        }
+
+        .fixed {
+            border: 0 !important;
+        }
+    </style>
+}
+
+<div id="PricingTab">
+    <div class="container">
+        <h2>Our Sample Pricing</h2>
+        <hr class="White-Yellow">
+        <div class="row">
+            <div class="scroll">
+                <table class="table table-condensed table-hover">
+                    <thead>
+                        <tr>
+                            <th class="tabco1 fixed"></th>
+                            @foreach (var itemRecurso in Model.Recurso)
+                            {
+                                <th class="tabTheDreamTeam small text-center">
+                                    <span>@itemRecurso.Nome</span>
+                                </th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="tabco1">Qua 17/01/2018</td>
+                            @foreach (var itemRecurso in Model.Recurso)
+                            {
+                                <td class="colRecurso tabco2"><i class="fa fa-check rightSign" aria-hidden="true"></i></td>
+                            }
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div><!--row-->
+    </div><!--container-->
+</div><!--PricingTab-->
