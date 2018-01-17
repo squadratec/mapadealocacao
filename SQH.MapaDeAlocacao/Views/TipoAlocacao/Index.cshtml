@@ -36,17 +36,19 @@
                             <td>
                                 @item.Sigla
                             </td>
-                            <td style="background-color:@item.Cor">
-                            </td>
+                            <td style="background-color:@item.Cor"></td>
                             <td style="text-align:center">
                                 <a asp-action="Create" asp-route-id="@item.IdTipoAlocacao" title="Editar">
                                     <i class="glyphicon glyphicon-pencil"></i>
                                 </a>
-                                <a href="javscript:;" data-toggle="modal" data-target="#@item.IdTipoAlocacao" title="Deletar">
+                                <a href="javscript:;" data-toggle="modal" data-target="#1" title="Deletar">
                                     <i class="glyphicon glyphicon-trash"></i>
                                 </a>
 
-                                @Html.Partial("_Modal", new DeletarViewModel() { Id = item.IdTipoAlocacao, Nome = item.Nome })
+                                @*@Html.Partial("_Modal", new DeletarViewModel() { Id = item.IdTipoAlocacao, Nome = item.Nome })*@
+
+                                @Html.Partial("_AlocacaoProjeto", new SQH.Entities.Models.Alocacao.RecursoAlocacao() { IdAlocacao = 1, IdRecurso = 0, DataFinal = DateTime.Now, DataInicio = DateTime.Now })
+
 
                             </td>
                         </tr>

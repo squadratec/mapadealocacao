@@ -1,1 +1,29 @@
-﻿
+﻿@model SQH.Entities.Models.Alocacao.RecursoAlocacao
+
+<!-- Modal -->
+<div class="modal fade" id="@Model.IdAlocacao" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Confirmar exclusão</h4>
+            </div>
+            <div class="modal-body">
+                <form asp-controller="AlocacaoController" asp-action="CreateAlocacaoRecurso" method="post">
+                    <input type="hidden" asp-for="IdAlocacao" id="hdnIdAlocacao" />
+                    <input type="hidden" asp-for="IdRecurso" id="hdnIdRecurso" />
+
+                    <input type="datetime" asp-for="DataInicio" id="DataInicio" />
+
+                    <input type="datetime" asp-for="DataFinal" id="DataFinal" />
+
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-default" data-dismiss="modal">Gravar</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                
+            </div>
+        </div>
+    </div>
+</div>
