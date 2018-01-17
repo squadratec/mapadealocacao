@@ -26,6 +26,8 @@ namespace SQH.MapaDeAlocacao
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(config =>
             {
+                config.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                config.SlidingExpiration = true;
                 config.LoginPath = "/login";
                 config.LogoutPath = "/logout";
                 config.AccessDeniedPath = "/logout";
