@@ -1,4 +1,5 @@
 ﻿using SQH.Entities.Database;
+using SQH.Entities.Response.TipoAlocacao;
 using System.Collections.Generic;
 
 namespace SQH.Business.Contract
@@ -17,7 +18,7 @@ namespace SQH.Business.Contract
         /// <param name="id">ID referente ao tipo de alocação</param>
         /// <returns></returns>
         tipo_alocacao ObterPorId(int id);
-        IEnumerable<tipo_alocacao> ObtemTodos();
+        IEnumerable<TipoAlocacaoResponse> ObtemTodos();
         /// <summary>
         /// Alterar o tipo de alocação
         /// </summary>
