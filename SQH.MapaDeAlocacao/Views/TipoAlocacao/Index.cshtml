@@ -45,7 +45,7 @@
                                     <i class="glyphicon glyphicon-trash"></i>
                                 </a>
 
-                                @Html.Partial("_Modal", new DeletarViewModel() { Id = item.IdTipoAlocacao, Nome = item.Nome })
+                                @Html.Partial("_Modal", new DeletarViewModel() { Id = item.IdTipoAlocacao, Nome = item.Nome, Controller = "TipoAlocacao" })
 
                             </td>
                         </tr>

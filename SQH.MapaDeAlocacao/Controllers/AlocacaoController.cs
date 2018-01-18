@@ -122,6 +122,7 @@ namespace SQH.MapaDeAlocacao.Controllers
             {
                 _alocacaoProjetoService.RemoverAlocacao(id);
 
+                ExibirMensagem("Alocação excluída com sucesso.", Alert.success);
                 return RedirectToAction("Edit", "Projeto", new { Id = redirecionar });
             }
             catch (Exception ex)
