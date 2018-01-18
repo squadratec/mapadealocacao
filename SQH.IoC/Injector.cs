@@ -38,6 +38,9 @@ namespace SQH.IoC
 
             services.AddSingleton<IAlocacaoProjetoRepository, AlocacaoProjetoRepository>();
             services.AddSingleton<IAlocacaoProjetoService, AlocacaoProjetoService>();
+
+            services.AddSingleton<IAlocacaoRecursoRepository, AlocacaoRecursoRepository>();
+            services.AddSingleton<IAlocacaoRecursoService, AlocacaoRecursoService>();
         }
     }
 }

@@ -14,26 +14,38 @@
         {
             <tr>
                 <td>
-                    @item.TipoAlocacao
-                    <input type="hidden" asp-for="@item.IdTipoAlocacao" />
-                    <input type="hidden" asp-for="@item.IdAlocacao" />
+                    <span class="tipoAlocacao">@item.TipoAlocacao</span>
+                    <input class="idTipoAlocacao" type="hidden" asp-for="@item.IdTipoAlocacao" />
+                    <input class="idAlocacao" type="hidden" asp-for="@item.IdAlocacao" />
                 </td>
                 <td>
-                    @item.DataInicio.ToShortDateString()
+                    <span class="dataInicio"> @item.DataInicio.ToShortDateString()</span>
                 </td>
                 <td>
-                    @item.DataFim.ToShortDateString()
+                    <span class="dataFim"> @item.DataFim.ToShortDateString() </span>
                 </td>
                 <td class="text-center">
-                    <a href="#" title="Editar Período">
+                    <a href="#" title="Editar Período" class="lnkEditarPeriodo">
                         <i class="glyphicon glyphicon-pencil"></i>
                     </a>
                     <a href="#" title="Editar Recursos">
                         <i class="glyphicon glyphicon-edit"></i>
                     </a>
-                    <a href="#" title="Remover Alocação">
+                    <a asp-action="Delete" asp-controller="Alocacao" asp-route-id="@item.IdAlocacao" asp-route-idProjeto="@item.IdProjeto" title="Remover Alocação">
                         <i class="glyphicon glyphicon-trash"></i>
                     </a>
+
+                    <a href="javscript:;" data-toggle="modal" data-target="#@item.IdAlocacao" title="Deletar">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </a>
+
+                    @Html.Partial("_Modal", new DeletarViewModel()
+               {
+                   Id = item.IdAlocacao,
+                   Nome = item.TipoAlocacao,
+                   Controller = "Alocacao",
+                   Redirecionar = item.IdProjeto.ToString()
+               })
                 </td>
             </tr>
         }

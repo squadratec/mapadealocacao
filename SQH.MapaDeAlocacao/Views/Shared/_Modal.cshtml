@@ -11,10 +11,20 @@
                 Você tem certeza que deseja deletar o registro: <span><b>@Model.Nome</b></span>
             </div>
             <div class="modal-footer">
+
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                <a asp-action="Delete" asp-route-id="@Model.Id" title="Deletar" class="btn btn-danger">
-                    Deletar
-                </a>
+                @if (!String.IsNullOrEmpty(Model.Redirecionar))
+                {
+                    <a asp-action="Delete" asp-controller="@Model.Controller" asp-route-id="@Model.Id" asp-route-redirecionar="@Model.Redirecionar" title="Deletar" class="btn btn-danger">
+                        Deletar
+                    </a>
+                }
+                else
+                {
+                    <a asp-action="Delete" asp-controller="@Model.Controller" asp-route-id="@Model.Id" title="Deletar" class="btn btn-danger">
+                        Deletar
+                    </a>
+                }
             </div>
         </div>
     </div>

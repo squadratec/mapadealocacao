@@ -4,6 +4,7 @@ using SQH.Entities.Response.Alocacao;
 using SQH.DataAccess.Contract;
 using System.Linq;
 using SQH.Entities.Database;
+using SQH.Entities.Requisicao;
 
 namespace SQH.Business.Service
 {
@@ -20,7 +21,7 @@ namespace SQH.Business.Service
 
         public IEnumerable<AlocacaoProjetoResponse> ObtemAlocacoesPorProjeto(int idProjeto)
         {
-            var alocacaoProjeto = _alocacaoProjetoRepository.Find(x => x.IdProjeto == idProjeto);
+            var alocacaoProjeto = _alocacaoProjetoRepository.Find(x => x.IdProjeto == idProjeto).OrderBy(x => x.DataInicio).ThenBy(x => x.DataFim);
 
             var retorno = new List<AlocacaoProjetoResponse>();
 
@@ -37,11 +38,65 @@ namespace SQH.Business.Service
             return retorno;
         }
 
+        public IncluirAlocacaoProjetoResponse IncluirAlocacaoProjeto(AlocacaoProjetoRequisicao requisicao)
+        {
+            var retorno = new IncluirAlocacaoProjetoResponse();
+
+            if (ValidaSeAlocacaoJaExistente(requisicao, out string mensagem))
+            {
+                var alocacaoProjeto = new alocacao_projeto(requisicao.IdProjeto, requisicao.IdTipoAlocacao, requisicao.DataInicio, requisicao.DataFim);
+
+                _alocacaoProjetoRepository.Add(alocacaoProjeto);
+
+                retorno.Valido = true;
+                return retorno;
+            }
+            else
+            {
+                retorno.Mensagem = mensagem;
+                retorno.Valido = false;
+
+                return retorno;
+            }
+        }
+
+        public void AlterarPeriodoAlocacaoProjeto(AlocacaoProjetoRequisicao requisicao)
+        {
+            var alocacaoProjeto = new alocacao_projeto(requisicao.IdAlocacao, requisicao.DataInicio, requisicao.DataFim);
+
+            _alocacaoProjetoRepository.Update(alocacaoProjeto);
+        }
+
+        public void RemoverAlocacao(int id)
+        {
+            var alocacao = _alocacaoProjetoRepository.FindByID(id);
+
+            _alocacaoProjetoRepository.Remove(alocacao);
+        }
+
+        #region Métodos Privados
         private tipo_alocacao ObtemTipoAlocacao(int id)
         {
             var tipoAlocacao = _tipoAlocacaoRepository.FindByID(id);
 
             return tipoAlocacao;
         }
+
+        private bool ValidaSeAlocacaoJaExistente(AlocacaoProjetoRequisicao requisicao, out string mensagem)
+        {
+            mensagem = string.Empty;
+            var projetoAlocacao = _alocacaoProjetoRepository.Find(x => x.IdProjeto == requisicao.IdProjeto && x.IdTipoAlocacao == requisicao.IdTipoAlocacao);
+
+            if (projetoAlocacao.Count() > 0)
+            {
+                mensagem = "Já existe esse Tipo de Alocação para esse Projeto.";
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        #endregion
     }
 }

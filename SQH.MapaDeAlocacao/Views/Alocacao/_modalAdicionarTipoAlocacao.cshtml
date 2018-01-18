@@ -1,4 +1,6 @@
 ﻿
+@model SQH.Entities.Models.Alocacao.AlocacaoProjetoModel
+
 <div class="modal bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modalSalvarTipoAlocacao">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -6,35 +8,46 @@
                 <h4 class="modal-title" id="exampleModalLabel">Salvar Alocação</h4>
             </div>
             <div class="modal-body">
-                <form asp-action="SalvarAlocacao" class="form-horizontal" method="post">
-                    <div class="form-group">
-                        <label class="col-md-2 control-label"></label>
+                <form id="formSalvarAlocacaoProjeto" asp-action="SalvarAlocacaoProjeto" asp-controller="Alocacao" class="form-horizontal" method="post">
+                    <input type="hidden" asp-for="IdProjeto" />
+                    <input type="hidden" asp-for="IdAlocacao" />
+
+                    <div class="form-group" id="divCboAlocacao">
+                        <label asp-for="IdTipoAlocacao" class="col-md-2 control-label"></label>
                         <div class="col-md-9">
-                            <select class="form-control"></select>
-                            @*<span asp-validation-for="Nome" class="text-danger"></span>*@
+                            <select asp-for="IdTipoAlocacao" asp-items="@Model.TiposAlocacao" class="form-control"></select>
+                            <span asp-validation-for="IdTipoAlocacao" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group hide" id="divStrAlocacao">
+                        <label class="col-md-2 control-label">Tipo de Alocação</label>
+                        <div class="col-md-9">
+                            <label class="control-label" id="lblTipoAlocacao"></label>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-md-2 control-label"></label>
+                        <label asp-for="DataFim" class="col-md-2 control-label"></label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control data" />
-                            @*<span asp-validation-for="Nome" class="text-danger"></span>*@
+                            <input asp-for="DataInicio" type="text" class="form-control data dataInicioAlocacaoProjeto" />
+                            <span asp-validation-for="DataInicio" class="text-danger"></span>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-md-2 control-label"></label>
+                        <label asp-for="DataFim" class="col-md-2 control-label"></label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control data" />
-                            @*<span asp-validation-for="Nome" class="text-danger"></span>*@
+                            <input asp-for="DataFim" type="text" class="form-control data dataFinalAlocacaoProjeto" />
+                            <span asp-validation-for="DataFim" class="text-danger"></span>
                         </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
                     </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-primary">Salvar</button>
             </div>
         </div>
     </div>
