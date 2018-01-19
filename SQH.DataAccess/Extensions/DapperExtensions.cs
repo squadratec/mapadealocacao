@@ -11,7 +11,7 @@ namespace SQH.DataAccess.Extensions
         public static T Insert<T>(this IDbConnection cnn, string tableName, dynamic param)
         {
             IEnumerable<T> result = SqlMapper.Query<T>(cnn, DynamicQuery.GetInsertQuery(tableName, param), param);
-            return result.First();
+            return result.FirstOrDefault();
         }
 
         public static void Update(this IDbConnection cnn, string tableName, dynamic param)

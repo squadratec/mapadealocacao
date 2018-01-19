@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SQH.Business.Contract;
 using SQH.Entities.Models.Projeto;
-using SQH.Entities.Database;
 using SQH.Entities.Models.Alocacao;
 using SQH.Entities.Response.Alocacao;
+using Microsoft.AspNetCore.Authorization;
+using SQH.Entities.Response.AlocacaoRecurso;
 
 namespace SQH.MapaDeAlocacao.Controllers
 {
+    [Authorize]
     public class ProjetoController : Controller
     {
         private readonly IProjetoService _projetoService;
@@ -67,10 +67,27 @@ namespace SQH.MapaDeAlocacao.Controllers
                 IdAlocacao = x.IdAlocacao,
                 IdProjeto = x.IdProjeto,
                 IdTipoAlocacao = x.IdTipoAlocacao,
-                TipoAlocacao = x.TipoAlocacao
+                TipoAlocacao = x.TipoAlocacao,
+                Recursos = TransformaAlocacaoRecursoModel(x.Recursos)
             }));
 
             return model;
+        }
+
+        private List<AlocacaoRecursoModel> TransformaAlocacaoRecursoModel(IEnumerable<AlocacaoRecursoResponse> response)
+        {
+            var retorno = new List<AlocacaoRecursoModel>();
+
+            response.ToList().ForEach(x => retorno.Add(new AlocacaoRecursoModel()
+            {
+                DataFim = x.DataFim,
+                DataInicio = x.DataInicio,
+                IdAlocacao = x.IdAlocacao,
+                IdRecurso = x.IdRecurso,
+                Recurso = x.Recurso
+            }));
+
+            return retorno;
         }
     }
 }

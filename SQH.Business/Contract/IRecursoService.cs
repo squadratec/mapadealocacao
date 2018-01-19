@@ -14,5 +14,6 @@ namespace SQH.Business.Contract
         IEnumerable<RecursoResponse> Find(Expression<Func<Recurso, bool>> predicate);
         bool Editar(Entities.Models.Recurso.RecursoModel model);
         bool Deletar(int id);
+        IEnumerable<RecursoResponse> ObtemRecursosPorNome(string nome);
     }
 }

@@ -5,9 +5,12 @@ using SQH.Entities.Models.Recurso;
 using SQH.Business.Contract;
 using static SQH.Shared.Enums.Alerts;
 using System;
+using Microsoft.AspNetCore.Authorization;
+using SQH.Entities.Models;
 
 namespace SQH.MapaDeAlocacao.Controllers
 {
+    [Authorize]
     public class RecursoController : BaseController
     {
         private readonly IRecursoService _recursoService;
@@ -107,6 +110,21 @@ namespace SQH.MapaDeAlocacao.Controllers
                 ExibirMensagem(ex.Message, Alert.danger);
                 return RedirectToAction("Index");
             }
+        }
+
+        public JsonResult ObtemAutoCompleteRecurso(string termos)
+        {
+            var recursos = _recursoService.ObtemRecursosPorNome(termos.Trim());
+
+            var retorno = new List<AutoCompleteModel>();
+
+            recursos.ToList().ForEach(x => retorno.Add(new AutoCompleteModel()
+            {
+                label = x.Nome,
+                value = x.Id.ToString()
+            }));
+
+            return Json(retorno);
         }
     }
 }

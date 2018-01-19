@@ -10,6 +10,7 @@ namespace SQH.Entities.Models.Alocacao
         public AlocacaoProjetoModel()
         {
             TiposAlocacao = new List<SelectListItem>();
+            Recursos = new List<AlocacaoRecursoModel>();
         }
 
         public int IdAlocacao { get; set; }
@@ -31,5 +32,7 @@ namespace SQH.Entities.Models.Alocacao
         public DateTime DataFim { get; set; }
 
         public List<SelectListItem> TiposAlocacao { get; set; }
+
+        public List<AlocacaoRecursoModel> Recursos { get; set; }
     }
 }

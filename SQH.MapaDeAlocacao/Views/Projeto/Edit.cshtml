@@ -29,6 +29,6 @@
     @Html.Partial("~/Views/Alocacao/_modalAdicionarTipoAlocacao.cshtml", new SQH.Entities.Models.Alocacao.AlocacaoProjetoModel())
 </div>
 
-@section Scripts{
-    <script src="~/app/js/Projeto/EditProjeto.js"></script>
-}
+<div id="divModalRecursoProjeto">
+    @Html.Partial("~/Views/Alocacao/_modalAdicionarRecursoAlocacao.cshtml", new SQH.Entities.Models.Alocacao.AlocacaoRecursoModel())
+</div>

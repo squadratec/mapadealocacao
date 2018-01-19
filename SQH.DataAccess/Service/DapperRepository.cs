@@ -52,6 +52,17 @@ namespace SQH.DataAccess.Service
             }
         }
 
+        public void Remove(T item, string conditions, object parameters = null)
+        {
+            var dic = item.GetPrimaryKeyAttribute();
+
+            using (IDbConnection cn = Connection)
+            {
+                cn.Open();
+                cn.Execute($"DELETE FROM {typeof(T).Name} {conditions}", parameters);
+            }
+        }
+
         public void Update(T item)
         {
             using (IDbConnection cn = Connection)
@@ -101,6 +112,19 @@ namespace SQH.DataAccess.Service
                 cn.Open();
                 items = cn.Query<T>($"SELECT * FROM {typeof(T).Name}");
             }
+            return items;
+        }
+
+        public IEnumerable<T> GetList(string conditions, object parameters = null)
+        {
+            IEnumerable<T> items = null;
+
+            using (IDbConnection cn = Connection)
+            {
+                cn.Open();
+                items = cn.Query<T>(conditions, parameters);
+            }
+
             return items;
         }
     }

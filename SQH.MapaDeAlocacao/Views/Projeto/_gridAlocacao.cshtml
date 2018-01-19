@@ -1,50 +1,83 @@
 ﻿@model SQH.Entities.Models.Projeto.ProjetoModel
 
-<table class="table table-striped table-bordered" cellspacing="0">
-    <thead>
-        <tr>
-            <th>Tipo de Alocação</th>
-            <th>Período Inicial</th>
-            <th>Período Final</th>
-            <th class="text-center">Ações</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Alocacoes)
-        {
-            <tr>
-                <td>
-                    <span class="tipoAlocacao">@item.TipoAlocacao</span>
-                    <input class="idTipoAlocacao" type="hidden" asp-for="@item.IdTipoAlocacao" />
-                    <input class="idAlocacao" type="hidden" asp-for="@item.IdAlocacao" />
-                </td>
-                <td>
-                    <span class="dataInicio"> @item.DataInicio.ToShortDateString()</span>
-                </td>
-                <td>
-                    <span class="dataFim"> @item.DataFim.ToShortDateString() </span>
-                </td>
-                <td class="text-center">
-                    <a href="#" title="Editar Período" class="lnkEditarPeriodo">
-                        <i class="glyphicon glyphicon-pencil"></i>
-                    </a>
-                    <a href="#" title="Editar Recursos">
-                        <i class="glyphicon glyphicon-edit"></i>
-                    </a>
+@foreach (var alocacao in Model.Alocacoes)
+{
+    <div class="alocacoes">
+        <input class="idTipoAlocacao" type="hidden" asp-for="@alocacao.IdTipoAlocacao" />
+        <input class="idAlocacao" type="hidden" asp-for="@alocacao.IdAlocacao" />
 
-                    <a href="#" data-toggle="modal" data-target="#@item.IdAlocacao" title="Deletar">
-                        <i class="glyphicon glyphicon-trash"></i>
-                    </a>
+        <div class="infoAlocacao text-center">
+            <span class="tipoAlocacao">@alocacao.TipoAlocacao</span>
+            <span class="dataInicio">@alocacao.DataInicio.ToShortDateString() </span> à
+            <span class="dataFim">@alocacao.DataFim.ToShortDateString()</span>
+        </div>
 
-                    @Html.Partial("_Modal", new DeletarViewModel()
-               {
-                   Id = item.IdAlocacao,
-                   Nome = item.TipoAlocacao,
-                   Controller = "Alocacao",
-                   Redirecionar = item.IdProjeto.ToString()
-               })
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+        <div class="text-right">
+            <a href="#" title="Editar Período" class="lnkEditarPeriodo">
+                <i class="glyphicon glyphicon-pencil"></i>
+            </a>
+
+            <a href="#" title="Adicionar Recurso" class="lnkAdicionarRecurso">
+                <i class="glyphicon glyphicon-edit"></i>
+            </a>
+
+            <a href="#" data-toggle="modal" data-target="#@alocacao.IdAlocacao" title="Deletar Alocação">
+                <i class="glyphicon glyphicon-trash"></i>
+            </a>
+
+            @Html.Partial("_Modal", new DeletarViewModel()
+       {
+           Id = alocacao.IdAlocacao.ToString(),
+           Nome = alocacao.TipoAlocacao,
+           Controller = "Alocacao",
+           Redirecionar = alocacao.IdProjeto.ToString()
+       })
+        </div>
+
+
+        <table class="table table-striped table-bordered" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Período Inicial</th>
+                    <th>Período Final</th>
+                    <th class="text-center">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var recurso in alocacao.Recursos)
+                {
+                    <tr>
+                        <td>
+                            <span class="tipoAlocacao">@recurso.Recurso</span>
+                            <input class="idRecurso" type="hidden" asp-for="@recurso.IdRecurso" />
+                        </td>
+                        <td>
+                            <span class="dataInicio"> @recurso.DataInicio.ToShortDateString()</span>
+                        </td>
+                        <td>
+                            <span class="dataFim"> @recurso.DataFim.ToShortDateString() </span>
+                        </td>
+                        <td class="text-center">
+                            <a href="#" title="Editar Recurso">
+                                <i class="glyphicon glyphicon-pencil"></i>
+                            </a>
+
+                            <a href="#" data-toggle="modal" data-target="#@recurso.IdRecurso-@recurso.IdAlocacao" title="Deletar Recurso">
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </a>
+
+                            @Html.Partial("_Modal", new DeletarViewModel()
+                       {
+                           Id = recurso.IdRecurso.ToString() + "-" + recurso.IdAlocacao.ToString(),
+                           Nome = recurso.Recurso,
+                           Controller = "AlocacaoRecurso",
+                           Redirecionar = alocacao.IdProjeto.ToString()
+                       })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

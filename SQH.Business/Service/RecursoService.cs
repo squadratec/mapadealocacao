@@ -104,6 +104,24 @@ namespace SQH.Business.Service
             }
         }
 
+        public IEnumerable<RecursoResponse> ObtemRecursosPorNome(string nome)
+        {
+            string likename = "%" + nome.ToLower() + "%";
+
+            var recursos = _recursoRepository.GetList("SELECT * FROM RECURSO WHERE LOWER(NOME) LIKE @Nome", new { Nome = likename });
+
+            var retorno = new List<RecursoResponse>();
+
+            recursos.ToList().ForEach(x => retorno.Add(new RecursoResponse()
+            {
+                Email = x.Email,
+                Id = x.IdRecurso,
+                Nome = x.Nome
+            }));
+
+            return retorno;
+        }
+
         #region Método Privados
         private bool ValidaCamposObrigatorios(Entities.Models.Recurso.RecursoModel model)
         {
