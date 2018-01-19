@@ -11,7 +11,7 @@ namespace SQH.Entities.Database
         {
             IdAlocacao = RecursoAlocacao.IdAlocacao;
             IdRecurso = RecursoAlocacao.IdRecurso;
-            DataFinal = RecursoAlocacao.DataFinal;
+            DataFim = RecursoAlocacao.DataFinal;
             DataInicio = RecursoAlocacao.DataInicio;
         }
 
@@ -24,6 +24,6 @@ namespace SQH.Entities.Database
         public int IdRecurso { get; set; }
 
         public DateTime DataInicio { get; set; }
-        public DateTime DataFinal { get; set; }
+        public DateTime DataFim { get; set; }
     }
 }

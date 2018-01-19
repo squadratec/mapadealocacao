@@ -1,5 +1,6 @@
 ﻿using SQH.Entities.Requisicao;
 using SQH.Entities.Response.Alocacao;
+using System;
 using System.Collections.Generic;
 
 namespace SQH.Business.Contract
@@ -9,6 +10,12 @@ namespace SQH.Business.Contract
         IEnumerable<AlocacaoProjetoResponse> ObtemAlocacoesPorProjeto(int idProjeto);
 
         IncluirAlocacaoProjetoResponse IncluirAlocacaoProjeto(AlocacaoProjetoRequisicao requisicao);
+
+        DateTime ObtemMenorDataInicial();
+
+        DateTime ObtemMaiorDataFinal();
+
+        AlocacaoProjetoResponse ObtemProjetoPorAlocacao(Int32 IdAlocacao);
 
         void AlterarPeriodoAlocacaoProjeto(AlocacaoProjetoRequisicao requisicao);
 

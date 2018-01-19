@@ -5,6 +5,7 @@ using SQH.DataAccess.Contract;
 using System.Linq;
 using SQH.Entities.Database;
 using SQH.Entities.Requisicao;
+using System;
 
 namespace SQH.Business.Service
 {
@@ -17,6 +18,36 @@ namespace SQH.Business.Service
         {
             _alocacaoProjetoRepository = alocacaoProjetoRepository;
             _tipoAlocacaoRepository = tipoAlocacaoRepository;
+        }
+
+        public AlocacaoProjetoResponse ObtemProjetoPorAlocacao(Int32 IdAlocacao)
+        {
+            var obj = _alocacaoProjetoRepository.Find(x => x.IdAlocacao == IdAlocacao).FirstOrDefault();
+            var retorno = new AlocacaoProjetoResponse();
+            if (obj != null)
+            {
+                retorno = new AlocacaoProjetoResponse()
+                {
+                    DataFim = obj.DataFim,
+                    DataInicio = obj.DataInicio,
+                    IdAlocacao = obj.IdAlocacao,
+                    IdProjeto = obj.IdProjeto,
+                    IdTipoAlocacao = obj.IdTipoAlocacao,
+                    TipoAlocacao = ObtemTipoAlocacao(obj.IdTipoAlocacao).Nome
+                };
+            }
+
+            return retorno;
+        }
+
+        public DateTime ObtemMenorDataInicial()
+        {
+            return _alocacaoProjetoRepository.FindAll().Min(x => x.DataInicio);
+        }
+
+        public DateTime ObtemMaiorDataFinal()
+        {
+            return _alocacaoProjetoRepository.FindAll().Max(x => x.DataFim);
         }
 
         public IEnumerable<AlocacaoProjetoResponse> ObtemAlocacoesPorProjeto(int idProjeto)

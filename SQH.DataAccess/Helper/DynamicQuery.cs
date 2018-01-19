@@ -233,6 +233,10 @@ namespace SQH.DataAccess.Helper
                     return "<";
                 case ExpressionType.GreaterThan:
                     return ">";
+                case ExpressionType.GreaterThanOrEqual:
+                    return ">=";
+                case ExpressionType.LessThanOrEqual:
+                    return "<=";
                 case ExpressionType.AndAlso:
                 case ExpressionType.And:
                     return "AND";

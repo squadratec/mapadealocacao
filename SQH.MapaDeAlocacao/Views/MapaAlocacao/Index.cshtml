@@ -30,8 +30,17 @@
             color: #fff;
         }
 
-        .scroll th.tabTheDreamTeam, .colRecurso {
+        .scroll th.tabTheDreamTeam {
             background: #00C853;
+            padding: 20px 5px !important;
+            text-transform: uppercase;
+            border-right: 2px solid #ddd;
+            vertical-align: middle;
+            font-weight: bold;
+            color: #FFF;
+        }
+
+        .colRecurso {
             padding: 20px 5px !important;
             text-transform: uppercase;
             border-right: 2px solid #ddd;
@@ -105,6 +114,10 @@
             .scroll .fixed {
                 border: 0 !important;
             }
+
+        .legeanda {
+            margin-top: 0;
+        }
     </style>
 }
 
@@ -113,7 +126,7 @@
     <h2>Mapa de alocação</h2>
     <hr class="White-Yellow">
     <div class="col-md-3 pull-right">
-        <h3 class="col-md-12 small text-center"><strong>Legenda</strong></h3>
+        <h3 class="col-md-12 small text-center legeanda"><strong>Legenda</strong></h3>
         <table class="table-condensed table-hover col-md-12 pull-right">
             <tbody>
                 <tr>
@@ -157,13 +170,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td class="tabco1">Qua 17/01/2018</td>
-                            @foreach (var itemRecurso in Model.Recurso)
-                            {
-                                <td class="colRecurso tabco2"></td>
-                            }
-                        </tr>
+
+                        @foreach (var itemData in Model.Datas)
+                        {
+                            <tr>
+                                <td class="tabco1">@itemData.Data</td>
+                                @foreach (var itemRecurso in itemData.ProjetoRecurso)
+                                {
+                                <td style="background-color:@itemRecurso.Cor" class="colRecurso text-center">@(itemRecurso.IdProjeto > 0 ? itemRecurso.IdProjeto.ToString() : "")</td>
+                                    }
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>

@@ -1,10 +1,12 @@
 ﻿using SQH.Business.Contract;
 using SQH.DataAccess.Contract;
 using SQH.Entities.Database;
+using SQH.Entities.Response.Projeto;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
+using System.Linq;
 
 namespace SQH.Business.Service
 {
