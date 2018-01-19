@@ -3,8 +3,8 @@ using SQH.DataAccess.Contract;
 using SQH.Entities.Database;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace SQH.Business.Service
 {
@@ -34,7 +34,7 @@ namespace SQH.Business.Service
             return objs;
         }
 
-        public bool Incluir(Entities.Models.Alocacao.RecursoAlocacaoModel model)
+        public bool Incluir(Entities.Models.Alocacao.AlocacaoRecursoModel model)
         {
             if (!IsTipoAlocacao(model.IdRecurso, model.IdAlocacao))
             {
@@ -47,7 +47,7 @@ namespace SQH.Business.Service
             }
         }
 
-        public bool Editar(Entities.Models.Alocacao.RecursoAlocacaoModel model)
+        public bool Editar(Entities.Models.Alocacao.AlocacaoRecursoModel model)
         {
             if (IsTipoAlocacao(model.IdRecurso, model.IdAlocacao))
             {
@@ -60,13 +60,13 @@ namespace SQH.Business.Service
             }
         }
 
-        public bool Deletar(int id)
+        public bool Deletar(int idAlocacao, int idRecurso)
         {
-            var obj = _alocacaoRecursoRepository.FindByID(id);
+            var obj = _alocacaoRecursoRepository.Find(x => x.IdAlocacao == idAlocacao && x.IdRecurso == idRecurso).FirstOrDefault();
 
             if (obj != null)
             {
-                _alocacaoRecursoRepository.Remove(obj);
+                _alocacaoRecursoRepository.Remove(obj, "WHERE IdAlocacao = @IdAlocacao AND IdRecurso = @IdRecurso", new { IdAlocacao = idAlocacao, IdRecurso = idRecurso });
                 return true;
             }
             else
@@ -78,7 +78,8 @@ namespace SQH.Business.Service
         #region Métodos Privados
         private bool IsTipoAlocacao(int IdRecurso, int IdAlocacao)
         {
-            return (_alocacaoRecursoRepository.Find(x => x.IdRecurso == IdRecurso && x.IdAlocacao == IdAlocacao) != null) ? true : false;
+            var alocacaoRecurso = _alocacaoRecursoRepository.Find(x => x.IdRecurso == IdRecurso && x.IdAlocacao == IdAlocacao);
+            return (alocacaoRecurso != null && alocacaoRecurso.Count() > 0) ? true : false;
         }
         #endregion
     }

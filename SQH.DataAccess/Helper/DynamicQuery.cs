@@ -79,11 +79,22 @@ namespace SQH.DataAccess.Helper
             PropertyInfo[] props = item.GetType().GetProperties();
             string[] columns = props.Select(p => p.Name).Where(x => x != dic.Key).ToArray();
 
-            return string.Format("INSERT INTO {0} ({1}) OUTPUT inserted.{2} VALUES (@{3})",
+            if(dic.Key != null)
+            {
+                return string.Format("INSERT INTO {0} ({1}) OUTPUT inserted.{2} VALUES (@{3})",
                                  tableName,
                                  string.Join(",", columns),
                                  dic.Key,
                                  string.Join(",@", columns));
+            }
+            else
+            {
+                return string.Format("INSERT INTO {0} ({1}) VALUES (@{2})",
+                                 tableName,
+                                 string.Join(",", columns),
+                                 string.Join(",@", columns));
+            }
+
         }
 
         /// <summary>

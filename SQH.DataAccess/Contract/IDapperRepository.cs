@@ -8,9 +8,11 @@ namespace SQH.DataAccess.Contract
     {
         void Add(T item);
         void Remove(T item);
+        void Remove(T item, string conditions, object parameters = null);
         void Update(T item);
         T FindByID(int id);
         IEnumerable<T> Find(Expression<Func<T, bool>> predicate);
         IEnumerable<T> FindAll();
+        IEnumerable<T> GetList(string conditions, object parameters = null);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SQH.Business.Contract;
 using SQH.Entities.Models.Alocacao;
@@ -6,11 +7,11 @@ using SQH.Entities.Requisicao;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using static SQH.Shared.Enums.Alerts;
 
 namespace SQH.MapaDeAlocacao.Controllers
 {
+    [Authorize]
     public class AlocacaoController : BaseController
     {
         private readonly IAlocacaoRecursoService _alocacaoRecursoService;
@@ -27,7 +28,7 @@ namespace SQH.MapaDeAlocacao.Controllers
 
         [HttpPost, Route("CreateAlocacaoRecurso", Name = "AlocacaoRecursoPost")]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateAlocacaoRecurso(RecursoAlocacaoModel model)
+        public ActionResult CreateAlocacaoRecurso(AlocacaoRecursoModel model)
         {
             try
             {

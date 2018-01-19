@@ -1,6 +1,9 @@
 ﻿(function () {
     $(document).ready(function () {
-        //alocação
+        setDatePicker();
+
+        $.autoComplete();
+
         $('#btnModalAdicionarTipoAlocacao').click(function (e) {
             e.preventDefault();
 
@@ -24,15 +27,15 @@
         $('.lnkEditarPeriodo').click(function (e) {
             e.preventDefault();
 
-            var tr = $(this).closest('tbody tr');
+            var divAlocacao = $(this).closest('.alocacoes');
 
-            var alocacao = $(tr).children().find('.tipoAlocacao').html().trim();
-            var idTipoAlocacao = $(tr).children().find('.idTipoAlocacao').val();
-            var idAlocacao = $(tr).children().find('.idAlocacao').val();
+            var alocacao = $(divAlocacao).find('.tipoAlocacao').html().trim();
+            var idTipoAlocacao = $(divAlocacao).find('.idTipoAlocacao').val();
+            var idAlocacao = getIdAlocacao(this);
             var idProjeto = $('#Id').val();
 
-            var dataInicio = $(tr).children().find('.dataInicio').html().trim();
-            var dataFinal = $(tr).children().find('.dataFim').html().trim();
+            var dataInicio = $(divAlocacao).find('.dataInicio').html().trim();
+            var dataFinal = $(divAlocacao).find('.dataFim').html().trim();
 
             $('.dataInicioAlocacaoProjeto').val(dataInicio);
             $('.dataFinalAlocacaoProjeto').val(dataFinal);
@@ -53,6 +56,20 @@
                 backdrop: 'static'
             });
         });
+
+        $('.lnkAdicionarRecurso').click(function (e) {
+
+            var idAlocacao = getIdAlocacao(this);
+            var idProjeto = $('#Id').val();
+            
+            $('#idAlocacaoRecurso').val(idAlocacao);
+            $('#idProjetoAlocacaoRecurso').val(idProjeto);
+
+            $('#modalSalvarRecursoAlocacao').modal({
+                show: true,
+                backdrop: 'static'
+            });
+        });
     });
 
     function setDatePicker() {
@@ -63,5 +80,13 @@
             formatDate: 'Y/m/d',
             startDate: new Date()
         });
+    };
+
+    function getIdAlocacao(e) {
+        var divAlocacao = $(e).closest('.alocacoes');
+        
+        var idAlocacao = $(divAlocacao).find('.idAlocacao').val();
+
+        return idAlocacao;
     };
 })();
