@@ -9,6 +9,13 @@
             </div>
             <div class="modal-body">
                 <form id="formSalvarAlocacaoProjeto" asp-action="SalvarAlocacaoProjeto" asp-controller="Alocacao" class="form-horizontal" method="post">
+                    <div class="alert alert-danger alert-dismissible hide" role="alert" id="alertErroSalvarAlocacaoProjeto">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <strong id="msgErroSalvarAlocacaoProjeto"></strong>
+                    </div>
+                    
                     <input type="hidden" asp-for="IdProjeto" />
                     <input type="hidden" asp-for="IdAlocacao" />
 
@@ -44,8 +51,8 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Salvar</button>
+                        <button type="button" id="btnCancelarSalvarAlocacaoProjeto" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="button" id="btnSalvarAlocacaoProjeto" class="btn btn-primary">Salvar</button>
                     </div>
                 </form>
             </div>

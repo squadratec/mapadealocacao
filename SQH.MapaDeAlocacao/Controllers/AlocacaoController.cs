@@ -70,24 +70,22 @@ namespace SQH.MapaDeAlocacao.Controllers
 
                     if (retorno.Valido)
                     {
-                        ExibirMensagem("Alocação incluída com sucesso.", Alert.success);
-                        return RedirectToAction("Edit", "Projeto", new { Id = model.IdProjeto });
+                        //ExibirMensagem("Alocação incluída com sucesso.", Alert.success);
+                        return Json(new { valido = true, mensagem = "Alocação incluída com sucesso." });
                     }
                     else
                     {
-                        ExibirMensagem(retorno.Mensagem, Alert.danger);
-                        return RedirectToAction("Edit", "Projeto", new { Id = model.IdProjeto });
+                        return Json(new { valido = false, mensagem = retorno.Mensagem });
                     }
                 }
                 else
                 {
-                    return RedirectToAction("Edit", "Projeto", new { Id = model.IdProjeto });
+                    return Json(new { valido = false, mensagem = "O formulário foi preenchido incorretamente." });
                 }
             }
             catch (Exception ex)
             {
-                ExibirMensagem(ex.Message, Alert.danger);
-                return RedirectToAction("Edit", "Projeto", new { Id = model.IdProjeto });
+                return Json(new { valido = false, mensagem = ex.Message });
             }
         }
 
@@ -102,18 +100,17 @@ namespace SQH.MapaDeAlocacao.Controllers
 
                     _alocacaoProjetoService.AlterarPeriodoAlocacaoProjeto(requisicao);
 
-                    ExibirMensagem("Período alterado com sucesso.", Alert.success);
-                    return RedirectToAction("Edit", "Projeto", new { Id = model.IdProjeto });
+                    //ExibirMensagem("Período alterado com sucesso.", Alert.success);
+                    return Json(new { valido = true, mensagem = "Período alterado com sucesso." });
                 }
                 else
                 {
-                    return RedirectToAction("Edit", "Projeto", new { Id = model.IdProjeto });
+                    return Json(new { valido = false, mensagem = "O formulário foi preenchido incorretamente." });
                 }
             }
             catch (Exception ex)
             {
-                ExibirMensagem(ex.Message, Alert.danger);
-                return RedirectToAction("Edit", "Projeto", new { Id = model.IdProjeto });
+                return Json(new { valido = false, mensagem = ex.Message });
             }
         }
 

@@ -18,5 +18,10 @@ namespace SQH.DataAccess.Extensions
         {
             SqlMapper.Execute(cnn, DynamicQuery.GetUpdateQuery(tableName, param), param);
         }
+
+        public static void Update(this IDbConnection cnn, string tableName, string conditions, dynamic param)
+        {
+            SqlMapper.Execute(cnn, DynamicQuery.GetUpdateQuery(tableName, conditions, param), param);
+        }
     }
 }

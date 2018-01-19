@@ -17,8 +17,10 @@ namespace SQH.Entities.Database
         public alocacao_projeto_recursos()
         { }
         
+        [Ignore]
         public int IdAlocacao { get; set; }
 
+        [Ignore]
         public int IdRecurso { get; set; }
 
         public DateTime DataInicio { get; set; }

@@ -73,6 +73,16 @@ namespace SQH.DataAccess.Service
             }
         }
 
+        public void Update(T item, string conditions)
+        {
+            using (IDbConnection cn = Connection)
+            {
+                var parameters = (object)Mapping(item);
+                cn.Open();
+                cn.Update(typeof(T).Name, conditions, parameters);
+            }
+        }
+
         public T FindByID(int id)
         {
             var item = Activator.CreateInstance(typeof(T));

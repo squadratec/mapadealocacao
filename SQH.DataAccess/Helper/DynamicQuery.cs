@@ -118,6 +118,18 @@ namespace SQH.DataAccess.Helper
             return string.Format("UPDATE {0} SET {1} WHERE {2}={3}", tableName, string.Join(",", parameters), dic.Key, dic.Value);
         }
 
+        public static string GetUpdateQuery<T>(string tableName, string conditions, T item)
+        {
+            var ignoneValues = item.GetAttributeByType(typeof(IgnoreAttribute)).Select(x => x.Key);
+
+            PropertyInfo[] props = item.GetType().GetProperties();
+            string[] columns = props.Select(p => p.Name).Where(x => !ignoneValues.Contains(x)).ToArray();
+
+            var parameters = columns.Select(name => name + "=@" + name).ToList();
+
+            return string.Format("UPDATE {0} SET {1} {2}", tableName, string.Join(",", parameters), conditions);
+        }
+
 
         /// <summary>
         /// Gets the dynamic query.

@@ -9,6 +9,13 @@
             </div>
             <div class="modal-body">
                 <form id="formSalvarRecursoAlocacao" asp-action="Incluir" asp-controller="AlocacaoRecurso" class="form-horizontal" method="post">
+                    <div class="alert alert-danger alert-dismissible hide" role="alert" id="alertErroSalvarRecurso">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <strong id="msgErroSalvarRecurso"></strong>
+                    </div>
+
                     <input type="hidden" id="idAlocacaoRecurso" asp-for="IdAlocacao" />
                     <input type="hidden" id="idProjetoAlocacaoRecurso" asp-for="IdProjeto" />
 
@@ -24,7 +31,7 @@
                     <div class="form-group">
                         <label asp-for="DataInicio" class="col-md-2 control-label"></label>
                         <div class="col-md-9">
-                            <input asp-for="DataInicio" type="text" class="form-control data" />
+                            <input asp-for="DataInicio" type="text" class="form-control data dataInicioAlocacaoRecurso" />
                             <span asp-validation-for="DataInicio" class="text-danger"></span>
                         </div>
                     </div>
@@ -32,14 +39,14 @@
                     <div class="form-group">
                         <label asp-for="DataFim" class="col-md-2 control-label"></label>
                         <div class="col-md-9">
-                            <input asp-for="DataFim" type="text" class="form-control data" />
+                            <input asp-for="DataFim" type="text" class="form-control data dataFimAlocacaoRecurso" />
                             <span asp-validation-for="DataFim" class="text-danger"></span>
                         </div>
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Salvar</button>
+                        <button type="button" id="btnCancelarModalRecursoAlocacao" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="button" id="btnSalvarRecursoAlocacao" class="btn btn-primary">Salvar</button>
                     </div>
                 </form>
             </div>

@@ -21,15 +21,21 @@ namespace SQH.MapaDeAlocacao.Controllers
         {
             try
             {
-                _alocacaoRecursoService.Incluir(model);
+                var retorno = _alocacaoRecursoService.Incluir(model);
 
-                ExibirMensagem("Alocação de recurso salvo com sucesso.", Alert.success);
-                return RedirectToAction("Edit", "Projeto", new { Id = model.IdProjeto });
+                if (retorno.Valido)
+                {
+                    //ExibirMensagem("Alocação de recurso salvo com sucesso.", Alert.success);
+                    return Json(new { valido = true, mensagem = "Alocação de recurso salvo com sucesso." });
+                }
+                else
+                {
+                    return Json(new { valido = false, mensagem = retorno.Mensagem });
+                }
             }
             catch (Exception ex)
             {
-                ExibirMensagem(ex.Message, Alert.danger);
-                return RedirectToAction("Edit", "Projeto", new { Id = model.IdProjeto });
+                return Json(new { valido = false, mensagem = ex.Message });
             }
         }
 
@@ -37,15 +43,21 @@ namespace SQH.MapaDeAlocacao.Controllers
         {
             try
             {
-                _alocacaoRecursoService.Editar(model);
+                var retorno = _alocacaoRecursoService.Editar(model);
 
-                ExibirMensagem("Alocação de recurso editado com sucesso.", Alert.success);
-                return RedirectToAction("Edit", "Projeto", new { Id = model.IdProjeto });
+                if (retorno.Valido)
+                {
+                    //ExibirMensagem("Alocação de recurso editado com sucesso.", Alert.success);
+                    return Json(new { valido = true, mensagem = "Alocação de recurso editado com sucesso." });
+                }
+                else
+                {
+                    return Json(new { valido = false, mensagem = retorno.Mensagem });
+                }
             }
             catch (Exception ex)
             {
-                ExibirMensagem(ex.Message, Alert.danger);
-                return RedirectToAction("Edit", "Projeto", new { Id = model.IdProjeto });
+                return Json(new { valido = false, mensagem = ex.Message });
             }
         }
 

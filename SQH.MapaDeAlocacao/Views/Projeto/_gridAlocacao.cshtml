@@ -49,7 +49,7 @@
                 {
                     <tr>
                         <td>
-                            <span class="tipoAlocacao">@recurso.Recurso</span>
+                            <span class="recurso">@recurso.Recurso</span>
                             <input class="idRecurso" type="hidden" asp-for="@recurso.IdRecurso" />
                         </td>
                         <td>
@@ -59,7 +59,7 @@
                             <span class="dataFim"> @recurso.DataFim.ToShortDateString() </span>
                         </td>
                         <td class="text-center">
-                            <a href="#" title="Editar Recurso">
+                            <a href="#" title="Editar Recurso" class="lnkEditarRecursoAlocacao">
                                 <i class="glyphicon glyphicon-pencil"></i>
                             </a>
 

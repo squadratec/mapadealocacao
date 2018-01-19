@@ -1,23 +1,24 @@
 ﻿using SQH.Business.Contract;
 using SQH.DataAccess.Contract;
 using SQH.Entities.Database;
-using SQH.Entities.Response.Projeto;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 using System.Linq;
+using SQH.Entities.Models.Alocacao;
+using SQH.Entities.Response.AlocacaoRecurso;
 
 namespace SQH.Business.Service
 {
     public class AlocacaoRecursoService : IAlocacaoRecursoService
     {
-
         private readonly IAlocacaoRecursoRepository _alocacaoRecursoRepository;
+        private readonly IAlocacaoProjetoRepository _alocacaoProjetoRepository;
 
-        public AlocacaoRecursoService(IAlocacaoRecursoRepository alocacaoRecursoRepository)
+        public AlocacaoRecursoService(IAlocacaoRecursoRepository alocacaoRecursoRepository, IAlocacaoProjetoRepository alocacaoProjetoRepository)
         {
             _alocacaoRecursoRepository = alocacaoRecursoRepository;
+            _alocacaoProjetoRepository = alocacaoProjetoRepository;
         }
 
         public alocacao_projeto_recursos ObterPorId(int id)
@@ -36,29 +37,45 @@ namespace SQH.Business.Service
             return objs;
         }
 
-        public bool Incluir(Entities.Models.Alocacao.AlocacaoRecursoModel model)
+        public SalvarAlocacaoRecursoResponse Incluir(AlocacaoRecursoModel model)
         {
-            if (!IsTipoAlocacao(model.IdRecurso, model.IdAlocacao))
+            var retorno = new SalvarAlocacaoRecursoResponse();
+
+            string mensagem;
+
+            if (!IsTipoAlocacao(model.IdRecurso, model.IdAlocacao, out mensagem) && DataValida(model.DataInicio, model.DataFim, model.IdAlocacao, out mensagem))
             {
                 _alocacaoRecursoRepository.Add(new alocacao_projeto_recursos(model));
-                return true;
+                retorno.Valido = true;
+
+                return retorno;
             }
             else
             {
-                return false;
+                retorno.Valido = false;
+                retorno.Mensagem = mensagem;
+
+                return retorno;
             }
         }
 
-        public bool Editar(Entities.Models.Alocacao.AlocacaoRecursoModel model)
+        public SalvarAlocacaoRecursoResponse Editar(AlocacaoRecursoModel model)
         {
-            if (IsTipoAlocacao(model.IdRecurso, model.IdAlocacao))
+            var retorno = new SalvarAlocacaoRecursoResponse();
+
+            if (DataValida(model.DataInicio, model.DataFim, model.IdAlocacao, out string mensagem))
             {
-                _alocacaoRecursoRepository.Update(new alocacao_projeto_recursos(model));
-                return true;
+                _alocacaoRecursoRepository.Update(new alocacao_projeto_recursos(model), $"WHERE IdAlocacao = {model.IdAlocacao} and IdRecurso = {model.IdRecurso}");
+                retorno.Valido = true;
+
+                return retorno;
             }
             else
             {
-                return false;
+                retorno.Valido = true;
+                retorno.Mensagem = mensagem;
+
+                return retorno;
             }
         }
 
@@ -78,10 +95,32 @@ namespace SQH.Business.Service
         }
 
         #region Métodos Privados
-        private bool IsTipoAlocacao(int IdRecurso, int IdAlocacao)
+        private bool IsTipoAlocacao(int IdRecurso, int IdAlocacao, out string mensagem)
         {
+            mensagem = string.Empty;
+
             var alocacaoRecurso = _alocacaoRecursoRepository.Find(x => x.IdRecurso == IdRecurso && x.IdAlocacao == IdAlocacao);
-            return (alocacaoRecurso != null && alocacaoRecurso.Count() > 0) ? true : false;
+            if (alocacaoRecurso != null && alocacaoRecurso.Count() > 0)
+            {
+                mensagem = "Recurso já alocado.";
+                return true;
+            }
+            else { return false; }
+        }
+
+        private bool DataValida(DateTime dataInicio, DateTime dataFim, int idAlocacao, out string mensagem)
+        {
+            mensagem = string.Empty;
+
+            var alocacao = _alocacaoProjetoRepository.FindByID(idAlocacao);
+
+            if ((alocacao.DataInicio.Date > dataInicio.Date || alocacao.DataFim.Date < dataFim.Date))
+            {
+                mensagem = "As datas informadas devem estar dentro do período da alocação.";
+                return false;
+            }
+            else
+                return true;
         }
         #endregion
     }
