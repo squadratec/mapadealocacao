@@ -119,7 +119,7 @@
                         $('#msgErroSalvarRecurso').html(result.mensagem);
                         $('#alertErroSalvarRecurso').removeClass('hide');
                     } else {
-                        window.location = "/Projeto/Edit/" + $('#Id').val();
+                        window.location = "/Projeto/Edit/" + $('#Id').val() + "?msg=" + result.mensagem;
                     }
                 }).error(function (result) {
                     $('#msgErroSalvarRecurso').html(result.mensagem);
@@ -140,7 +140,7 @@
                         $('#msgErroSalvarAlocacaoProjeto').html(result.mensagem);
                         $('#alertErroSalvarAlocacaoProjeto').removeClass('hide');
                     } else {
-                        window.location = "/Projeto/Edit/" + $('#Id').val();
+                        window.location = "/Projeto/Edit/" + $('#Id').val() + "?msg=" + result.mensagem;
                     }
                 }).error(function (result) {
                     $('#msgErroSalvarAlocacaoProjeto').html(result.mensagem);

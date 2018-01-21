@@ -7,11 +7,12 @@ using SQH.Entities.Models.Alocacao;
 using SQH.Entities.Response.Alocacao;
 using Microsoft.AspNetCore.Authorization;
 using SQH.Entities.Response.AlocacaoRecurso;
+using static SQH.Shared.Enums.Alerts;
 
 namespace SQH.MapaDeAlocacao.Controllers
 {
     [Authorize]
-    public class ProjetoController : Controller
+    public class ProjetoController : BaseController
     {
         private readonly IProjetoService _projetoService;
         private readonly ITipoAlocacaoService _tipoAlocacaoService;
@@ -43,7 +44,12 @@ namespace SQH.MapaDeAlocacao.Controllers
 
         public IActionResult Edit(int id)
         {
+            var msg = Request.QueryString.HasValue ? Request.QueryString.ToString().Split('=')[1] : null;
+
             var model = PreencheModelProjeto(id);
+
+            if (msg != null)
+                ExibirMensagem(msg, Alert.success);
 
             return View(model);
         }
