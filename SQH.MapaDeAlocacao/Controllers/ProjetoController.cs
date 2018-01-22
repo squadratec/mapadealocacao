@@ -44,14 +44,14 @@ namespace SQH.MapaDeAlocacao.Controllers
 
         public IActionResult Edit(int id)
         {
-            var msg = Request.QueryString.HasValue ? Request.QueryString.ToString().Split('=')[1] : null;
+            var msg = Request.Query["msg"].Count() > 0 ? Request.Query["msg"].ToString() : null;
 
             var model = PreencheModelProjeto(id);
 
             if (msg != null)
                 ExibirMensagem(msg, Alert.success);
 
-            return View(model);
+            return View(model); ;
         }
 
         private IEnumerable<AlocacaoProjetoResponse> ObtemAlocacoesProjeto(int idProjeto)
