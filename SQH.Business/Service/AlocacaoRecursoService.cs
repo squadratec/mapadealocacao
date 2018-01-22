@@ -43,7 +43,9 @@ namespace SQH.Business.Service
 
             string mensagem;
 
-            if (!IsTipoAlocacao(model.IdRecurso, model.IdAlocacao, out mensagem) && DataValida(model.DataInicio, model.DataFim, model.IdAlocacao, out mensagem))
+            if (ValidaRecursoTipoAlocacao(model.IdRecurso, model.IdAlocacao, out mensagem) &&
+                DataValida(model.DataInicio, model.DataFim, model.IdAlocacao, out mensagem) &&
+                ValidaRecursoDataAlocacao(model.IdRecurso, model.DataInicio, model.DataFim, out mensagem))
             {
                 _alocacaoRecursoRepository.Add(new alocacao_projeto_recursos(model));
                 retorno.Valido = true;
@@ -63,7 +65,10 @@ namespace SQH.Business.Service
         {
             var retorno = new SalvarAlocacaoRecursoResponse();
 
-            if (DataValida(model.DataInicio, model.DataFim, model.IdAlocacao, out string mensagem))
+            string mensagem;
+
+            if ((ValidaRecursoDataAlocacao(model.IdRecurso, model.DataInicio, model.DataFim, out mensagem)) &&
+                    DataValida(model.DataInicio, model.DataFim, model.IdAlocacao, out mensagem))
             {
                 _alocacaoRecursoRepository.Update(new alocacao_projeto_recursos(model), $"WHERE IdAlocacao = {model.IdAlocacao} and IdRecurso = {model.IdRecurso}");
                 retorno.Valido = true;
@@ -95,17 +100,30 @@ namespace SQH.Business.Service
         }
 
         #region Métodos Privados
-        private bool IsTipoAlocacao(int IdRecurso, int IdAlocacao, out string mensagem)
+        private bool ValidaRecursoTipoAlocacao(int idRecurso, int IdAlocacao, out string mensagem)
         {
             mensagem = string.Empty;
 
-            var alocacaoRecurso = _alocacaoRecursoRepository.Find(x => x.IdRecurso == IdRecurso && x.IdAlocacao == IdAlocacao);
+            var alocacaoRecurso = _alocacaoRecursoRepository.Find(x => x.IdRecurso == idRecurso && x.IdAlocacao == IdAlocacao);
             if (alocacaoRecurso != null && alocacaoRecurso.Count() > 0)
             {
                 mensagem = "Recurso já alocado.";
-                return true;
+                return false;
             }
-            else { return false; }
+            else { return true; }
+        }
+
+        private bool ValidaRecursoDataAlocacao(int idRecurso, DateTime dataInicio, DateTime dataFim, out string mensagem)
+        {
+            mensagem = string.Empty;
+
+            var alocacaoRecurso = _alocacaoRecursoRepository.Find(x => x.DataInicio.Date >= dataInicio.Date || x.DataFim.Date <= dataFim.Date && x.IdRecurso == idRecurso);
+            if (alocacaoRecurso != null && alocacaoRecurso.Count() > 0)
+            {
+                mensagem = "Recurso já alocado nesse período em outra atividade.";
+                return false;
+            }
+            else { return true; }
         }
 
         private bool DataValida(DateTime dataInicio, DateTime dataFim, int idAlocacao, out string mensagem)

@@ -1,5 +1,6 @@
 ﻿(function () {
     $(document).ready(function () {
+
         setDatePicker();
 
         $.autoComplete();
@@ -27,6 +28,7 @@
         $('.lnkEditarPeriodo').click(function (e) {
             e.preventDefault();
 
+            Pace.restart();
             var divAlocacao = $(this).closest('.alocacoes');
 
             var alocacao = $(divAlocacao).find('.tipoAlocacao').html().trim();
@@ -58,8 +60,7 @@
         });
 
         $('.lnkAdicionarRecurso').click(function (e) {
-
-
+            
             var idAlocacao = getIdAlocacao(this);
             var idProjeto = $('#Id').val();
 
