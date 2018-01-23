@@ -10,8 +10,8 @@ namespace SQH.Entities.Database
         {
             IdAlocacao = RecursoAlocacao.IdAlocacao;
             IdRecurso = RecursoAlocacao.IdRecurso;
-            DataFim = RecursoAlocacao.DataFim;
-            DataInicio = RecursoAlocacao.DataInicio;
+            DataFim = RecursoAlocacao.DataFimAlocacaoRecurso;
+            DataInicio = RecursoAlocacao.DataInicioAlocacaoRecurso;
         }
 
         public alocacao_projeto_recursos()

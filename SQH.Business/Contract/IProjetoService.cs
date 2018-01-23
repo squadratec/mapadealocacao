@@ -6,5 +6,7 @@ namespace SQH.Business.Contract
     public interface IProjetoService
     {
         IEnumerable<ProjetoResponse> ObtemTodos();
+
+        void AtualizarRegistros();
     }
 }

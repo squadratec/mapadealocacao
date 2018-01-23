@@ -11,11 +11,13 @@ namespace SQH.Business.Service
     {
         private readonly IProjetoRepository _projetoRepository;
         private readonly IRecursoRepository _recursoRepository;
+        private readonly ISharepointRepository _sharepointRepository;
 
-        public ProjetoService(IProjetoRepository projetoRepository, IRecursoRepository recursoRepository)
+        public ProjetoService(IProjetoRepository projetoRepository, IRecursoRepository recursoRepository, ISharepointRepository sharepointRepository)
         {
             _projetoRepository = projetoRepository;
             _recursoRepository = recursoRepository;
+            _sharepointRepository = sharepointRepository;
         }
 
         public IEnumerable<ProjetoResponse> ObtemTodos()
@@ -33,6 +35,11 @@ namespace SQH.Business.Service
             }));
 
             return retorno;
+        }
+
+        public void AtualizarRegistros()
+        {
+            _sharepointRepository.AtualizarProjetos();
         }
 
         private Recurso ObtemLiderProjeto(int id)

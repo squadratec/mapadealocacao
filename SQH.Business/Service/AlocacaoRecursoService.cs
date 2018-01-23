@@ -44,8 +44,8 @@ namespace SQH.Business.Service
             string mensagem;
 
             if (ValidaRecursoTipoAlocacao(model.IdRecurso, model.IdAlocacao, out mensagem) &&
-                DataValida(model.DataInicio, model.DataFim, model.IdAlocacao, out mensagem) &&
-                ValidaRecursoDataAlocacao(model.IdRecurso, model.DataInicio, model.DataFim, out mensagem))
+                DataValida(model.DataInicioAlocacaoRecurso, model.DataFimAlocacaoRecurso, model.IdAlocacao, out mensagem) &&
+                ValidaRecursoDataAlocacao(model.IdRecurso, model.DataInicioAlocacaoRecurso, model.DataFimAlocacaoRecurso, out mensagem))
             {
                 _alocacaoRecursoRepository.Add(new alocacao_projeto_recursos(model));
                 retorno.Valido = true;
@@ -67,8 +67,8 @@ namespace SQH.Business.Service
 
             string mensagem;
 
-            if ((ValidaRecursoDataAlocacao(model.IdRecurso, model.DataInicio, model.DataFim, out mensagem)) &&
-                    DataValida(model.DataInicio, model.DataFim, model.IdAlocacao, out mensagem))
+            if ((ValidaRecursoDataAlocacao(model.IdRecurso, model.DataInicioAlocacaoRecurso, model.DataFimAlocacaoRecurso, out mensagem)) &&
+                    DataValida(model.DataInicioAlocacaoRecurso, model.DataFimAlocacaoRecurso, model.IdAlocacao, out mensagem))
             {
                 _alocacaoRecursoRepository.Update(new alocacao_projeto_recursos(model), $"WHERE IdAlocacao = {model.IdAlocacao} and IdRecurso = {model.IdRecurso}");
                 retorno.Valido = true;

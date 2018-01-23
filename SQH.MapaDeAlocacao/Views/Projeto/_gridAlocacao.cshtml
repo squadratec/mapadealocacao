@@ -55,10 +55,10 @@
                             <input class="idRecurso" type="hidden" asp-for="@recurso.IdRecurso" />
                         </td>
                         <td>
-                            <span class="dataInicio"> @recurso.DataInicio.ToShortDateString()</span>
+                            <span class="dataInicio"> @recurso.DataInicioAlocacaoRecurso.ToShortDateString()</span>
                         </td>
                         <td>
-                            <span class="dataFim"> @recurso.DataFim.ToShortDateString() </span>
+                            <span class="dataFim"> @recurso.DataFimAlocacaoRecurso.ToShortDateString() </span>
                         </td>
                         <td class="text-center">
                             <a href="#" title="Editar Recurso" class="lnkEditarRecursoAlocacao">

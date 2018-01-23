@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SQH.Shared.Attributes;
+using SQH.Shared.Enums;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace SQH.Entities.Models.Alocacao
@@ -15,11 +17,12 @@ namespace SQH.Entities.Models.Alocacao
 
         [Display(Name = "Data Início")]
         [Required(ErrorMessage = "O campo 'Data Início' é obrigatório")]
-        public DateTime DataInicio { get; set; }
+        [DateCompare("DataFimAlocacaoRecurso", TipoComparacao.MenorIgual, ErrorMessage = "O valor informado para 'Data Início deve ser menor ou igual ao valor de 'Data Fim''")]
+        public DateTime DataInicioAlocacaoRecurso { get; set; }
 
         [Display(Name = "Data Fim")]
         [Required(ErrorMessage = "O campo 'Data Fim' é obrigatório")]
-        public DateTime DataFim { get; set; }
+        public DateTime DataFimAlocacaoRecurso { get; set; }
 
         public int IdProjeto { get; set; }
     }

@@ -1,6 +1,5 @@
 ﻿(function () {
     $(document).ready(function () {
-
         setDatePicker();
 
         $.autoComplete();
@@ -60,7 +59,7 @@
         });
 
         $('.lnkAdicionarRecurso').click(function (e) {
-            
+
             var idAlocacao = getIdAlocacao(this);
             var idProjeto = $('#Id').val();
 

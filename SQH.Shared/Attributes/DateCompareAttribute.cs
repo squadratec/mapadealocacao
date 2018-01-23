@@ -1,10 +1,12 @@
-﻿using SQH.Shared.Enums;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using SQH.Shared.Enums;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace SQH.Shared.Attributes
 {
-    public class DateCompareAttribute : ValidationAttribute
+    public class DateCompareAttribute : ValidationAttribute, IClientModelValidator
     {
         private string CampoComparacao { get; set; }
         private TipoComparacao TipoComparacao { get; set; }
@@ -23,7 +25,7 @@ namespace SQH.Shared.Attributes
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             DateTime valor = DateTime.MinValue;
-            DateTime valorComparacao = DateTime.MinValue;
+            var valorComparacao = DateTime.MinValue;
 
             if (value != null)
             {
@@ -86,6 +88,27 @@ namespace SQH.Shared.Attributes
             {
                 return ValidationResult.Success;
             }
+        }
+
+        public void AddValidation(ClientModelValidationContext context)
+        {
+            MergeAttribute(context.Attributes, "data-val", "true");
+            var errorMessage = FormatErrorMessage(context.ModelMetadata.GetDisplayName());
+            MergeAttribute(context.Attributes, "data-val-datecompare", errorMessage);
+
+            MergeAttribute(context.Attributes, "data-val-datecompare-with", CampoComparacao);
+            MergeAttribute(context.Attributes, "data-val-datecompare-tipo", TipoComparacao.ToString());
+        }
+
+        private bool MergeAttribute(IDictionary<string, string> attributes, string key, string value)
+        {
+            if (attributes.ContainsKey(key))
+            {
+                return false;
+            }
+
+            attributes.Add(key, value);
+            return true;
         }
     }
 }

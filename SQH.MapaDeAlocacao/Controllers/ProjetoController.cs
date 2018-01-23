@@ -8,6 +8,7 @@ using SQH.Entities.Response.Alocacao;
 using Microsoft.AspNetCore.Authorization;
 using SQH.Entities.Response.AlocacaoRecurso;
 using static SQH.Shared.Enums.Alerts;
+using System;
 
 namespace SQH.MapaDeAlocacao.Controllers
 {
@@ -54,6 +55,23 @@ namespace SQH.MapaDeAlocacao.Controllers
             return View(model); ;
         }
 
+        public IActionResult AtualizarRegistros()
+        {
+            try
+            {
+                _projetoService.AtualizarRegistros();
+
+                ExibirMensagem("Registros atualizados com Sucesso.", Alert.success);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ExibirMensagem(ex.Message, Alert.danger);
+                return RedirectToAction("Index");
+            }
+        }
+
+        #region Métodos Privados
         private IEnumerable<AlocacaoProjetoResponse> ObtemAlocacoesProjeto(int idProjeto)
         {
             var alocacoesProjeto = _alocacaoProjetoService.ObtemAlocacoesPorProjeto(idProjeto);
@@ -86,8 +104,8 @@ namespace SQH.MapaDeAlocacao.Controllers
 
             response.ToList().ForEach(x => retorno.Add(new AlocacaoRecursoModel()
             {
-                DataFim = x.DataFim,
-                DataInicio = x.DataInicio,
+                DataFimAlocacaoRecurso = x.DataFim,
+                DataInicioAlocacaoRecurso = x.DataInicio,
                 IdAlocacao = x.IdAlocacao,
                 IdRecurso = x.IdRecurso,
                 Recurso = x.Recurso
@@ -95,5 +113,6 @@ namespace SQH.MapaDeAlocacao.Controllers
 
             return retorno;
         }
+        #endregion
     }
 }

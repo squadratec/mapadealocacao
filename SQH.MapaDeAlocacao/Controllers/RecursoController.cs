@@ -112,6 +112,22 @@ namespace SQH.MapaDeAlocacao.Controllers
             }
         }
 
+        public IActionResult AtualizarRegistros()
+        {
+            try
+            {
+                _recursoService.AtualizarRegistros();
+
+                ExibirMensagem("Registros atualizados com Sucesso.", Alert.success);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ExibirMensagem(ex.Message, Alert.danger);
+                return RedirectToAction("Index");
+            }
+        }
+
         public JsonResult ObtemAutoCompleteRecurso(string termos)
         {
             var recursos = _recursoService.ObtemRecursosPorNome(termos.Trim());

@@ -67,7 +67,16 @@
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/jquery/dist/jquery-ui.js"></script>
+        <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/lib/DataTables-1.10.16/js/datatables.min.js"></script>
+        <script src="~/lib/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
+        <script src="~/lib/datetimepicker/js/jquery.datetimepicker.full.min.js"></script>
+        <script src="~/lib/pace/js/pace.min.js"></script>
+        <script src="~/app/componentes.js"></script>
+        <script src="~/js/methodsValitade.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
         <script src="~/app/js/Recurso/CreateRecurso.js"></script>
         <script src="~/app/js/Recurso/EditRecurso.js"></script>
@@ -84,24 +93,25 @@
                 crossorigin="anonymous"
                 integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
         </script>
+        <script src="~/lib/jquery/dist/jquery-ui.js"></script>
+        <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
         <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
                 asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
                 asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
                 crossorigin="anonymous"
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
         </script>
+        <script src="~/lib/DataTables-1.10.16/js/datatables.min.js"></script>
+        <script src="~/lib/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
+        <script src="~/lib/datetimepicker/js/jquery.datetimepicker.full.min.js"></script>
+        <script src="~/lib/pace/js/pace.min.js"></script>
+        <script src="~/app/componentes.js"></script>
+        <script src="~/js/methodsValitade.js"></script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
         <script src="~/app/app.min.js" asp-append-version="true"></script>
     </environment>
 
-    <script src="~/lib/jquery/dist/jquery-ui.js"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
-    <script src="~/lib/DataTables-1.10.16/js/datatables.min.js"></script>
-    <script src="~/lib/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
-    <script src="~/lib/datetimepicker/js/jquery.datetimepicker.full.min.js"></script>
-    <script src="~/lib/pace/js/pace.min.js"></script>
-    <script src="~/app/componentes.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

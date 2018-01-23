@@ -12,10 +12,12 @@ namespace SQH.Business.Service
     public class RecursoService : IRecursoService
     {
         private readonly IRecursoRepository _recursoRepository;
+        private readonly ISharepointRepository _sharepointRepository;
 
-        public RecursoService(IRecursoRepository recursoRepository)
+        public RecursoService(IRecursoRepository recursoRepository, ISharepointRepository sharepointRepository)
         {
             _recursoRepository = recursoRepository;
+            _sharepointRepository = sharepointRepository;
         }
 
         public Recurso ObterPorId(int id)
@@ -120,6 +122,11 @@ namespace SQH.Business.Service
             }));
 
             return retorno;
+        }
+
+        public void AtualizarRegistros()
+        {
+            _sharepointRepository.AtualizarRecursos();
         }
 
         #region Método Privados
