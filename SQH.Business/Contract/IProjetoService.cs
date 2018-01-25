@@ -8,5 +8,7 @@ namespace SQH.Business.Contract
         IEnumerable<ProjetoResponse> ObtemTodos();
 
         void AtualizarRegistros();
+
+        ProjetoResponse ObtemPorId(int id);
     }
 }

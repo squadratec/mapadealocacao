@@ -14,6 +14,8 @@ namespace SQH.Entities.Models.Projeto
 
         public int IdRecurso { get; set; }
 
+        public string Nome { get; set; }
+
         public IList<AlocacaoProjetoModel> Alocacoes { get; set; }
     }
 }

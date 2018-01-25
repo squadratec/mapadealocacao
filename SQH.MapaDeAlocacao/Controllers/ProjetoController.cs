@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using SQH.Entities.Response.AlocacaoRecurso;
 using static SQH.Shared.Enums.Alerts;
 using System;
+using SQH.Entities.Response.Projeto;
 
 namespace SQH.MapaDeAlocacao.Controllers
 {
@@ -83,7 +84,12 @@ namespace SQH.MapaDeAlocacao.Controllers
         {
             var model = new ProjetoModel();
 
+            var projeto = ObtemProjeto(idProjeto);
             var alocacoesProjeto = ObtemAlocacoesProjeto(idProjeto);
+            
+            model.Id = idProjeto;
+            model.Nome = projeto.Nome;
+
             alocacoesProjeto.ToList().ForEach(x => model.Alocacoes.Add(new AlocacaoProjetoModel()
             {
                 DataFim = x.DataFim,
@@ -112,6 +118,11 @@ namespace SQH.MapaDeAlocacao.Controllers
             }));
 
             return retorno;
+        }
+
+        private ProjetoResponse ObtemProjeto(int id)
+        {
+            return _projetoService.ObtemPorId(id);
         }
         #endregion
     }

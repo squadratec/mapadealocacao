@@ -38,6 +38,7 @@ namespace SQH.Entities.Models.MapaAlocacao
     public class ProjetoRecursoAlocacao
     {
         public int IdProjeto { get; set; }
+        public string NomeProjeto { get; set; }
 
         public int? IdRecurso { get; set; }
 

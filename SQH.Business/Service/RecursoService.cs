@@ -37,7 +37,7 @@ namespace SQH.Business.Service
             {
                 Email = x.Email,
                 Id = x.IdRecurso,
-                Nome = x.Nome
+                Nome = $"{x.Nome.Split(' ').First()}  {x.Nome.Split(' ').Last()}"
             }));
 
             return retorno;

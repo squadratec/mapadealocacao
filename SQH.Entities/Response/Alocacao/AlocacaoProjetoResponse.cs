@@ -13,6 +13,7 @@ namespace SQH.Entities.Response.Alocacao
 
         public int IdAlocacao { get; set; }
         public int IdProjeto { get; set; }
+        public string NomeProjeto { get; set; }
         public int IdTipoAlocacao { get; set; }
         public string TipoAlocacao { get; set; }
         public DateTime DataInicio { get; set; }

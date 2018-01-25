@@ -37,6 +37,20 @@ namespace SQH.Business.Service
             return retorno;
         }
 
+        public ProjetoResponse ObtemPorId(int id)
+        {
+            var projeto = _projetoRepository.FindByID(id);
+
+            var retorno = new ProjetoResponse()
+            {
+                IdProjeto = projeto.IdProjeto,
+                IdRecurso = projeto.IdRecurso,
+                Nome = projeto.Nome
+            };
+
+            return retorno;
+        }
+
         public void AtualizarRegistros()
         {
             _sharepointRepository.AtualizarProjetos();

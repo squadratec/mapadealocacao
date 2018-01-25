@@ -16,14 +16,16 @@ namespace SQH.Business.Service
         private readonly ITipoAlocacaoRepository _tipoAlocacaoRepository;
         private readonly IAlocacaoRecursoRepository _alocacaoRecursoRepository;
         private readonly IRecursoRepository _recursoRepository;
+        private readonly IProjetoRepository _projetoRepository;
 
         public AlocacaoProjetoService(IAlocacaoProjetoRepository alocacaoProjetoRepository, ITipoAlocacaoRepository tipoAlocacaoRepository,
-                                        IAlocacaoRecursoRepository alocacaoRecursoRepository, IRecursoRepository recursoRepository)
+                                        IAlocacaoRecursoRepository alocacaoRecursoRepository, IRecursoRepository recursoRepository, IProjetoRepository projetoRepository)
         {
             _alocacaoProjetoRepository = alocacaoProjetoRepository;
             _tipoAlocacaoRepository = tipoAlocacaoRepository;
             _alocacaoRecursoRepository = alocacaoRecursoRepository;
             _recursoRepository = recursoRepository;
+            _projetoRepository = projetoRepository;
         }
 
         public AlocacaoProjetoResponse ObtemProjetoPorAlocacao(Int32 IdAlocacao)
@@ -38,6 +40,7 @@ namespace SQH.Business.Service
                     DataInicio = obj.DataInicio,
                     IdAlocacao = obj.IdAlocacao,
                     IdProjeto = obj.IdProjeto,
+                    NomeProjeto = ObtemProjeto(obj.IdProjeto).Nome,
                     IdTipoAlocacao = obj.IdTipoAlocacao,
                     TipoAlocacao = ObtemTipoAlocacao(obj.IdTipoAlocacao).Nome
                 };
@@ -70,96 +73,106 @@ namespace SQH.Business.Service
                 IdProjeto = x.IdProjeto,
                 IdTipoAlocacao = x.IdTipoAlocacao,
                 TipoAlocacao = ObtemTipoAlocacao(x.IdTipoAlocacao).Nome,
-                Recursos = ObtemRecursosAlocacao(x.IdAlocacao)
-        }));
+                Recursos = ObtemRecursosAlocacao(x.IdAlocacao),
+                NomeProjeto = ObtemProjeto(x.IdProjeto).Nome
+            }));
 
             return retorno;
         }
 
-    public IncluirAlocacaoProjetoResponse IncluirAlocacaoProjeto(AlocacaoProjetoRequisicao requisicao)
-    {
-        var retorno = new IncluirAlocacaoProjetoResponse();
-
-        if (ValidaSeAlocacaoJaExistente(requisicao, out string mensagem))
+        public IncluirAlocacaoProjetoResponse IncluirAlocacaoProjeto(AlocacaoProjetoRequisicao requisicao)
         {
-            var alocacaoProjeto = new alocacao_projeto(requisicao.IdProjeto, requisicao.IdTipoAlocacao, requisicao.DataInicio, requisicao.DataFim);
+            var retorno = new IncluirAlocacaoProjetoResponse();
 
-            _alocacaoProjetoRepository.Add(alocacaoProjeto);
+            if (ValidaSeAlocacaoJaExistente(requisicao, out string mensagem))
+            {
+                var alocacaoProjeto = new alocacao_projeto(requisicao.IdProjeto, requisicao.IdTipoAlocacao, requisicao.DataInicio, requisicao.DataFim);
 
-            retorno.Valido = true;
+                _alocacaoProjetoRepository.Add(alocacaoProjeto);
+
+                retorno.Valido = true;
+                return retorno;
+            }
+            else
+            {
+                retorno.Mensagem = mensagem;
+                retorno.Valido = false;
+
+                return retorno;
+            }
+        }
+
+        public void AlterarPeriodoAlocacaoProjeto(AlocacaoProjetoRequisicao requisicao)
+        {
+            var alocacaoProjeto = new alocacao_projeto(requisicao.IdAlocacao, requisicao.DataInicio, requisicao.DataFim);
+
+            _alocacaoProjetoRepository.Update(alocacaoProjeto);
+        }
+
+        public void RemoverAlocacao(int id)
+        {
+            var alocacao = _alocacaoProjetoRepository.FindByID(id);
+
+            _alocacaoProjetoRepository.Remove(alocacao);
+        }
+
+        #region Métodos Privados
+        private tipo_alocacao ObtemTipoAlocacao(int id)
+        {
+            var tipoAlocacao = _tipoAlocacaoRepository.FindByID(id);
+
+            return tipoAlocacao;
+        }
+
+        private bool ValidaSeAlocacaoJaExistente(AlocacaoProjetoRequisicao requisicao, out string mensagem)
+        {
+            mensagem = string.Empty;
+            var projetoAlocacao = _alocacaoProjetoRepository.Find(x => x.IdProjeto == requisicao.IdProjeto && x.IdTipoAlocacao == requisicao.IdTipoAlocacao);
+
+            if (projetoAlocacao.Count() > 0)
+            {
+                mensagem = "Já existe esse Tipo de Alocação para esse Projeto.";
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        private IEnumerable<AlocacaoRecursoResponse> ObtemRecursosAlocacao(int idAlocacao)
+        {
+            var recursos = _alocacaoRecursoRepository.Find(x => x.IdAlocacao == idAlocacao);
+
+            var retorno = new List<AlocacaoRecursoResponse>();
+
+            recursos.ToList().ForEach(x => retorno.Add(new AlocacaoRecursoResponse()
+            {
+                DataFim = x.DataFim,
+                DataInicio = x.DataInicio,
+                IdAlocacao = x.IdAlocacao,
+                IdRecurso = x.IdRecurso,
+                Recurso = ObtemRecurso(x.IdRecurso).Nome
+            }));
+
             return retorno;
         }
-        else
-        {
-            retorno.Mensagem = mensagem;
-            retorno.Valido = false;
 
-            return retorno;
+        private Recurso ObtemRecurso(int idRecurso)
+        {
+            var recurso = _recursoRepository.FindByID(idRecurso);
+
+            return recurso;
         }
-    }
 
-    public void AlterarPeriodoAlocacaoProjeto(AlocacaoProjetoRequisicao requisicao)
-    {
-        var alocacaoProjeto = new alocacao_projeto(requisicao.IdAlocacao, requisicao.DataInicio, requisicao.DataFim);
-
-        _alocacaoProjetoRepository.Update(alocacaoProjeto);
-    }
-
-    public void RemoverAlocacao(int id)
-    {
-        var alocacao = _alocacaoProjetoRepository.FindByID(id);
-
-        _alocacaoProjetoRepository.Remove(alocacao);
-    }
-
-    #region Métodos Privados
-    private tipo_alocacao ObtemTipoAlocacao(int id)
-    {
-        var tipoAlocacao = _tipoAlocacaoRepository.FindByID(id);
-
-        return tipoAlocacao;
-    }
-
-    private bool ValidaSeAlocacaoJaExistente(AlocacaoProjetoRequisicao requisicao, out string mensagem)
-    {
-        mensagem = string.Empty;
-        var projetoAlocacao = _alocacaoProjetoRepository.Find(x => x.IdProjeto == requisicao.IdProjeto && x.IdTipoAlocacao == requisicao.IdTipoAlocacao);
-
-        if (projetoAlocacao.Count() > 0)
+        private Projeto ObtemProjeto(int id)
         {
-            mensagem = "Já existe esse Tipo de Alocação para esse Projeto.";
-            return false;
+            var projeto = new Projeto();
+
+            projeto = _projetoRepository.FindByID(id);
+
+            return projeto;
         }
-        else
-        {
-            return true;
-        }
+        #endregion
     }
-
-    private IEnumerable<AlocacaoRecursoResponse> ObtemRecursosAlocacao(int idAlocacao)
-    {
-        var recursos = _alocacaoRecursoRepository.Find(x => x.IdAlocacao == idAlocacao);
-
-        var retorno = new List<AlocacaoRecursoResponse>();
-
-        recursos.ToList().ForEach(x => retorno.Add(new AlocacaoRecursoResponse()
-        {
-            DataFim = x.DataFim,
-            DataInicio = x.DataInicio,
-            IdAlocacao = x.IdAlocacao,
-            IdRecurso = x.IdRecurso,
-            Recurso = ObtemRecurso(x.IdRecurso).Nome
-        }));
-
-        return retorno;
-    }
-
-    private Recurso ObtemRecurso(int idRecurso)
-    {
-        var recurso = _recursoRepository.FindByID(idRecurso);
-
-        return recurso;
-    }
-    #endregion
-}
 }

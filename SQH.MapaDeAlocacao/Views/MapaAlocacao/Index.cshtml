@@ -2,37 +2,38 @@
 
 
 @{
-    ViewData["Title"] = "teste";
+    ViewData["Title"] = "Mapa de Alocação";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @section Styles{
     <style>
+        table.table-fixed tbody {
+            overflow-y: scroll;
+            height: 350px;
+            display: block;
+        }
+
+        table.table-fixed thead {
+            display: table-row;
+        }
 
         .scroll .tabco1 {
             background: #fff;
-            width: 40%;
-            padding: 10px !important;
-            width: 140px;
+            padding: 8px 13px !important;
+            max-width: 138px;
         }
 
         .scroll th.tabco1 {
             background: #fff;
-            padding: 32px 10px !important;
             font-size: 18px;
             text-transform: uppercase;
             color: #000;
         }
 
-        .scroll .tabco2 {
-            background: #009688;
-            text-align: center;
-            color: #fff;
-        }
-
         .scroll th.tabTheDreamTeam {
             background: #00C853;
-            padding: 20px 5px !important;
+            padding: 20px 13px !important;
             text-transform: uppercase;
             border-right: 2px solid #ddd;
             vertical-align: middle;
@@ -41,7 +42,7 @@
         }
 
         .colRecurso {
-            padding: 20px 5px !important;
+            padding: 8px 13px !important;
             text-transform: uppercase;
             border-right: 2px solid #ddd;
             vertical-align: middle;
@@ -49,70 +50,39 @@
             color: #FFF;
         }
 
-            .scroll th.tabTheDreamTeam:last-child, .scroll td:last-child {
-                border-right: none;
-            }
-
-        .scroll .tabco3 {
-            background: #03A9F4;
-            text-align: center;
-            color: #fff;
-        }
-
-        .scroll th.tabco3 {
-            background: #039BE5;
-            padding: 20px 10px !important;
-            font-size: 18px;
-            text-transform: uppercase;
-        }
-
-        .scroll .tabco4 {
-            background: #EF5350;
-            text-align: center;
-            color: #fff;
-        }
-
-        .scroll th.tabco4 {
-            background: #E53935;
-            padding: 20px 10px !important;
-            font-size: 18px;
-            text-transform: uppercase;
+        .scroll th.tabTheDreamTeam:last-child, .scroll td:last-child {
+            border-right: none;
         }
 
         .scroll span {
-            width: 140px;
+            width: 85px;
             display: block;
         }
 
         .scroll td, th {
-            height: 54px;
-        }
-
-        #PricingTab {
-            position: relative;
+            height: 38px;
         }
 
         .scroll {
-            margin-left: 140px;
-            overflow-x: scroll;
             padding-bottom: 5px;
+            overflow-y: auto
         }
 
             .scroll tr th:first-child, .scroll tr td:first-child {
                 border-left: solid 1px #DDEFEF;
                 border-right: solid 1px #DDEFEF;
                 left: 0;
-                position: absolute;
                 top: auto;
             }
 
             .scroll table {
-                width: auto !important;
+                min-width: 100% !important;
                 max-width: none !important;
             }
 
-            .scroll .fixed {
-                border: 0 !important;
+            .scroll th.fixed {
+                max-width: 138px;
+                background-color: #FFF;
             }
 
         .legeanda {
@@ -123,66 +93,63 @@
 
 
 <div class="container">
-    <h2>Mapa de alocação</h2>
+    <h2>Mapa de Alocação</h2>
     <hr class="White-Yellow">
-    <div class="col-md-3 pull-right">
-        <h3 class="col-md-12 small text-center legeanda"><strong>Legenda</strong></h3>
-        <table class="table-condensed table-hover col-md-12 pull-right">
-            <tbody>
-                <tr>
-                    @foreach (var itemTipoAlocacao in Model.TipoAlocacao)
-                    {
-                        <td class="text-center" style="background-color:@itemTipoAlocacao.Cor">
-                            <span data-toggle="tooltip" data-placement="top" title="@itemTipoAlocacao.Nome">@itemTipoAlocacao.Sigla</span>
-                        </td>
-                    }
-                </tr>
-            </tbody>
-        </table>
 
-        <h3 class="col-md-12 small text-center"><strong>Frente de alocação</strong></h3>
-        <table class="table-condensed table-striped table-hover col-md-12 pull-right">
-            <tbody>
-                @foreach (var itemProjetos in Model.Projetos)
-                {
+    <div class="row">
+        <div class="col-md-3 pull-right">
+            <h3 class="col-md-12 small text-center legeanda"><strong>Legenda</strong></h3>
+            <table class="table-condensed table-hover col-md-12 pull-right">
+                <tbody>
                     <tr>
-                        <td class="text-center">@itemProjetos.IdProjeto</td>
-                        <td class="text-center">@itemProjetos.Nome</td>
-                    </tr>
-                }
-
-            </tbody>
-        </table>
-    </div>
-    <div class="col-md-9">
-        <div class="row">
-            <div class="scroll">
-                <table class="table table-condensed table-hover">
-                    <thead>
-                        <tr>
-                            <th class="tabco1 fixed"></th>
-                            @foreach (var itemRecurso in Model.Recurso)
-                            {
-                                <th class="tabTheDreamTeam small text-center">
-                                    <span>@itemRecurso.Nome</span>
-                                </th>
-                            }
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        @foreach (var itemData in Model.Datas)
+                        @foreach (var itemTipoAlocacao in Model.TipoAlocacao)
                         {
-                            <tr>
-                                <td class="tabco1">@itemData.Data</td>
-                                @foreach (var itemRecurso in itemData.ProjetoRecurso)
-                                {
-                                <td style="background-color:@itemRecurso.Cor" class="colRecurso text-center">@(itemRecurso.IdProjeto > 0 ? itemRecurso.IdProjeto.ToString() : "")</td>
-                                    }
-                            </tr>
+                            <td class="text-center" style="background-color:@itemTipoAlocacao.Cor">
+                                <span data-toggle="tooltip" data-placement="top" title="@itemTipoAlocacao.Nome">@itemTipoAlocacao.Sigla</span>
+                            </td>
                         }
-                    </tbody>
-                </table>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="scroll">
+                    <table class="table table-condensed table-hover table-fixed">
+                        <thead>
+                            <tr>
+                                <th class="fixed tabTheDreamTeam small text-center"><span></span></th>
+                                @foreach (var itemRecurso in Model.Recurso)
+                                {
+                                    <th class="tabTheDreamTeam small text-center">
+                                        <span>@itemRecurso.Nome</span>
+                                    </th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var itemData in Model.Datas)
+                            {
+                                <tr>
+                                    <td class="tabco1">
+                                        <span data-toggle="tooltip" data-placement="top" title="@itemData.Data">@itemData.Data</span>
+                                    </td>
+                                    @foreach (var itemRecurso in itemData.ProjetoRecurso)
+                                    {
+                                        <td style="background-color:@itemRecurso.Cor" class="colRecurso text-center">
+                                            <span data-toggle="tooltip" data-placement="top" title="@itemRecurso.NomeProjeto">@(itemRecurso.IdProjeto > 0 ? itemRecurso.IdProjeto.ToString() : "")</span>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

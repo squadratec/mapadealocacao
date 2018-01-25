@@ -50,8 +50,8 @@ namespace SQH.MapaDeAlocacao.Controllers
             {
                 DatasProjetos datasProjetos = new DatasProjetos();
 
-                datasProjetos.Data = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(itemData.DayOfWeek)) + " - " + String.Format("{0:dd/MM/yyyy}", itemData);
-
+                //datasProjetos.Data = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(itemData.DayOfWeek)) + " - " + String.Format("{0:dd/MM/yyyy}", itemData);
+                datasProjetos.Data = String.Format("{0:dd/MM/yyyy}", itemData);
                 datasProjetos.ProjetoRecurso = new List<ProjetoRecursoAlocacao>();
 
                 foreach (RecursoResponse itemRecurso in model.Recurso)
@@ -66,8 +66,8 @@ namespace SQH.MapaDeAlocacao.Controllers
                             AlocacaoProjetoResponse alocacaoProjetoResponse = _alocacaoProjetoService.ObtemProjetoPorAlocacao(projetoRecurso.IdAlocacao);
                             projetoResponse.IdProjeto = ((alocacaoProjetoResponse != null) ? alocacaoProjetoResponse.IdProjeto : 0);
                             projetoResponse.Cor = ((alocacaoProjetoResponse != null) ? _tipoAlocacaoService.ObterPorId(alocacaoProjetoResponse.IdTipoAlocacao).Cor : "#FFF");
-
-                            }
+                            projetoResponse.NomeProjeto = ((alocacaoProjetoResponse != null) ? alocacaoProjetoResponse.NomeProjeto : "");
+                        }
                     }
                     else
                     {
@@ -81,8 +81,5 @@ namespace SQH.MapaDeAlocacao.Controllers
             }
             return View(model);
         }
-
-
     }
-
 }
