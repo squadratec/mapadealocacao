@@ -79,7 +79,7 @@ namespace SQH.DataAccess.Helper
             PropertyInfo[] props = item.GetType().GetProperties();
             string[] columns = props.Select(p => p.Name).Where(x => x != dic.Key).ToArray();
 
-            if(dic.Key != null)
+            if (dic.Key != null)
             {
                 return string.Format("INSERT INTO {0} ({1}) OUTPUT inserted.{2} VALUES (@{3})",
                                  tableName,
@@ -159,7 +159,7 @@ namespace SQH.DataAccess.Helper
 
                 if (!string.IsNullOrEmpty(item.LinkingOperator) && i > 0)
                 {
-                    builder.Append(string.Format("{0} {1} {2} @{1} ", item.LinkingOperator, item.PropertyName,
+                    builder.Append(string.Format("{0} {1} {2} @{1} ", queryProperties[i - 1].LinkingOperator, item.PropertyName,
                                                  item.QueryOperator));
                 }
                 else

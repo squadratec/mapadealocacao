@@ -96,23 +96,31 @@
     <h2>Mapa de Alocação</h2>
     <hr class="White-Yellow">
 
-    <div class="row">
-        <div class="col-md-3 pull-right">
-            <h3 class="col-md-12 small text-center legeanda"><strong>Legenda</strong></h3>
-            <table class="table-condensed table-hover col-md-12 pull-right">
-                <tbody>
-                    <tr>
-                        @foreach (var itemTipoAlocacao in Model.TipoAlocacao)
-                        {
-                            <td class="text-center" style="background-color:@itemTipoAlocacao.Cor">
-                                <span data-toggle="tooltip" data-placement="top" title="@itemTipoAlocacao.Nome">@itemTipoAlocacao.Sigla</span>
-                            </td>
-                        }
-                    </tr>
-                </tbody>
-            </table>
+    <form asp-action="Index">
+        <div class="row">
+            <div class="col-md-3">
+                <input class="form-control data" placeholder="Período" name="mesAno" />
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-info">Consultar</button>
+            </div>
+            <div class="col-md-3 pull-right">
+                <h3 class="col-md-12 small text-center legeanda"><strong>Legenda</strong></h3>
+                <table class="table-condensed table-hover col-md-12 pull-right">
+                    <tbody>
+                        <tr>
+                            @foreach (var itemTipoAlocacao in Model.TipoAlocacao)
+                            {
+                                <td class="text-center" style="background-color:@itemTipoAlocacao.Cor">
+                                    <span data-toggle="tooltip" data-placement="top" title="@itemTipoAlocacao.Nome">@itemTipoAlocacao.Sigla</span>
+                                </td>
+                            }
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
+    </form>
 
     <br />
 
@@ -137,7 +145,7 @@
                             {
                                 <tr>
                                     <td class="tabco1">
-                                        <span data-toggle="tooltip" data-placement="top" title="@itemData.Data">@itemData.Data</span>
+                                        <span data-toggle="tooltip" data-placement="top" title="@itemData.DiaSemana">@itemData.Data</span>
                                     </td>
                                     @foreach (var itemRecurso in itemData.ProjetoRecurso)
                                     {

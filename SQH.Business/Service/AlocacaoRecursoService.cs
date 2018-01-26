@@ -117,7 +117,11 @@ namespace SQH.Business.Service
         {
             mensagem = string.Empty;
 
-            var alocacaoRecurso = _alocacaoRecursoRepository.Find(x => x.DataInicio.Date >= dataInicio.Date || x.DataFim.Date <= dataFim.Date && x.IdRecurso == idRecurso);
+            var alocacaoRecurso = _alocacaoRecursoRepository.GetList("SELECT * FROM alocacao_projeto_recursos " +
+                                                                        "WHERE ((DataInicio <= @DataInicio and DataFim >= @DataInicio) or " +
+                                                                                "(DataInicio <= @DataFim and DataFim >= @DataFim)) AND " +
+                                                                                "(IdRecurso = @IdRecurso)", new { DataInicio = dataInicio, DataFim = dataFim, IdRecurso = idRecurso });
+
             if (alocacaoRecurso != null && alocacaoRecurso.Count() > 0)
             {
                 mensagem = "Recurso já alocado nesse período em outra atividade.";

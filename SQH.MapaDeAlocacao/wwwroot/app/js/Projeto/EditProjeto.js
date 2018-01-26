@@ -27,7 +27,6 @@
         $('.lnkEditarPeriodo').click(function (e) {
             e.preventDefault();
 
-            Pace.restart();
             var divAlocacao = $(this).closest('.alocacoes');
 
             var alocacao = $(divAlocacao).find('.tipoAlocacao').html().trim();
@@ -68,7 +67,7 @@
 
             $('.dataInicioAlocacaoRecurso').val('');
             $('.dataFimAlocacaoRecurso').val('');
-
+            
             $('#modalSalvarRecursoAlocacao').modal({
                 show: true,
                 backdrop: 'static'
@@ -151,12 +150,9 @@
     });
 
     function setDatePicker() {
-        $.datetimepicker.setLocale('pt-BR');
         $('.data').datetimepicker({
-            timepicker: false,
-            format: 'd/m/Y',
-            formatDate: 'Y/m/d',
-            startDate: new Date()
+            locale: 'pt-BR',
+            format: "DD/MM/YYYY"
         });
     };
 

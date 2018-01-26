@@ -32,6 +32,7 @@ namespace SQH.Entities.Models.MapaAlocacao
         }
 
         public String Data { get; set; }
+        public String DiaSemana { get; set; }
         public List<ProjetoRecursoAlocacao> ProjetoRecurso { get; set; }
     }
 
