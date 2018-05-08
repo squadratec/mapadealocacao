@@ -1,4 +1,4 @@
-﻿@model SQH.Entities.Models.Alocacao.RecursoAlocacao
+﻿@model SQH.Entities.Models.Alocacao.AlocacaoRecursoModel
 
 <!-- Modal -->
 <div class="modal fade" id="@Model.IdAlocacao" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -13,9 +13,9 @@
                     <input type="hidden" asp-for="IdAlocacao" id="hdnIdAlocacao" />
                     <input type="hidden" asp-for="IdRecurso" id="hdnIdRecurso" />
 
-                    <input type="datetime" asp-for="DataInicio" id="DataInicio" />
+                    @*<input type="datetime" asp-for="DataInicio" id="DataInicio" />
 
-                    <input type="datetime" asp-for="DataFinal" id="DataFinal" />
+                    <input type="datetime" asp-for="DataFinal" id="DataFinal" />*@
 
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-default" data-dismiss="modal">Gravar</button>
